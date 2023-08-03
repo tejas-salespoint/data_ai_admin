@@ -12,7 +12,7 @@ import BackButton from "../../components/BackButton.jsx";
 
 const UpdateIndustryForm = () => {
     const location = useLocation();
-    const [getId, setGetId] = useState(location?.state?.id);
+    const [getId] = useState(location?.state?.id);
   
     const [getUpdateIndustryData, { data: getUpdateIndustryDataFilter }] = useLazyQuery(GET_INDUSTRY_BY_ID, {
         variables: {
@@ -22,7 +22,7 @@ const UpdateIndustryForm = () => {
 
     const [updateIndustry, { loading }] = useMutation(UPDATE_INDUSTRY);
     const [imageBase64, setImageBase64] = useState({});
-    const [isFormSubmitted, setIsFormSubmitted] = useState(false);
+    const [isFormSubmitted] = useState(false);
     const [formData, setFormData] = useState({
         title: "",
         overview: "",

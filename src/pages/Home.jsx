@@ -1,8 +1,7 @@
 import { useQuery } from "@apollo/client";
 import { GET_INDUSTRIES } from "../../graphql/query/queries.js";
-import { Link, json } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { parseJsonBody } from "@apollo/client/link/http/parseAndCheckHttpResponse.js";
 
 const Home = () => {
     const { loading, error, data } = useQuery(GET_INDUSTRIES);
@@ -32,7 +31,7 @@ const Home = () => {
                         </div>
 
                         <div>
-                            <div className="h-30 w-50 flex  justify-center items-center backdrop-brightness-50 absolute z-10  inset-1 flex justify-center group-hover:hidden items-center font-bold text-white">
+                            <div className="h-30 w-50 flex  justify-center items-center backdrop-brightness-50 absolute z-10  inset-1  group-hover:hidden  font-bold text-white">
                                 <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
                                     {item?.attributes.title}
                                 </button>
@@ -45,7 +44,7 @@ const Home = () => {
                                         id: item?.id,
                                     }}
                                 >
-                                    <button className="p-2 text-xl flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+                                    <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
                                         <FaEdit className="inline-block mr-2 text-lg" />
                                         Edit
                                     </button>
@@ -60,7 +59,7 @@ const Home = () => {
         </div>
 
         <div className="p-4 rounded-lg ">
-             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Industry Solution Plays</h2>
+             <h2 className="mb-4 text-sm font-bold text-gray-900 dark:text-white">Industry Piller</h2>
             <div className="grid grid-cols-4  gap-6">
                 {data?.industries?.data?.map((item) => (
                     <div
@@ -79,7 +78,7 @@ const Home = () => {
 
                         <div>
                             <div className="absolute z-10 inset-1 flex justify-center group-hover:hidden items-center font-bold text-white">
-                                <button className="p-2 text-white text-xl bg-blue font-bold w-[48%] px-5 rounded-full">
+                                <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
                                     {item?.attributes.title}
                                 </button>
                             </div>
@@ -91,7 +90,7 @@ const Home = () => {
                                         id: item?.id,
                                     }}
                                 >
-                                    <button className="p-2 text-xl flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+                                    <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
                                         <FaEdit className="inline-block mr-2 text-lg" />
                                         Edit
                                     </button>
@@ -106,7 +105,7 @@ const Home = () => {
         </div>
 
         <div className="p-4 rounded-lg ">
-             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Industry Use Cases</h2>
+             <h2 className="mb-4 text-sm font-bold text-gray-900 dark:text-white">Industry Use Cases</h2>
             <div className="grid grid-cols-4  gap-6">
                 {data?.industries?.data?.map((item) => (
                     <div
@@ -125,7 +124,7 @@ const Home = () => {
 
                         <div>
                             <div className="absolute z-10 inset-1 flex justify-center group-hover:hidden items-center font-bold text-white">
-                                <button className="p-2 text-white text-xl bg-blue font-bold w-[48%] px-5 rounded-full">
+                                <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
                                     {item?.attributes.title}
                                 </button>
                             </div>
@@ -137,7 +136,7 @@ const Home = () => {
                                         id: item?.id,
                                     }}
                                 >
-                                    <button className="p-2 text-xl flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+                                    <button className="p-2 text-sm flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
                                         <FaEdit className="inline-block mr-2 text-lg" />
                                         Edit
                                     </button>

@@ -56,12 +56,12 @@ const IndustryPillerCard = ({ id }) => {
 
         <div className="absolute z-10 inset-1 flex justify-center items-center font-bold text-white">
           <Link
-            to={"/create/industry_piller"}
+            to={"/edit/industry_piller/form"}
             state={{
               id: id,
             }}
           >
-            <button className="p-2 text-xl flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+            <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
               <FaEdit className="inline-block mr-2 text-lg" />
               Edit
             </button>

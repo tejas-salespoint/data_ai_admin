@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import IndustryForm from "../Form/IndustryForm.jsx";
-import SolutionPlaysForm from "../Form/SolutionPlaysForm.jsx";
+import SolutionPlaysForm from "../Form/IndustryPillerForm.jsx";
 import UsecaseForm from "../Form/usecaseForm.jsx";
 import Home from "../Home.jsx";
 import Updateindsutry from "../UpdateIndustry/Updateindsutry.jsx";
@@ -12,6 +12,7 @@ import UpdateIndustryForm from "../UpdateForm/UpdateIndustryForm.jsx";
 import Industry from "../MainPages/Industry/Industry";
 import IndustryPiller from "../MainPages/IndustryPiller/IndustryPiller";
 import IndustryUseCases from "../MainPages/IndustryUseCases/IndustryUseCases";
+import UpdateIndustryPillerForm from "../UpdateForm/UpdateIndustryPillerForm";
 
 const Dashboard = () => {
   return (
@@ -31,7 +32,7 @@ const Dashboard = () => {
                       <Route path="/edit/industry_piller" element={<Updateindsutry />} />
                       <Route path="/edit/industry_usecases" element={<UpdateUseCases />} />
                       <Route path="/edit/industry/form" element={<UpdateIndustryForm />} />
-                      <Route path="/edit/industry_piller/form" element={<SolutionPlaysForm />} />
+                      <Route path="/edit/industry_piller/form" element={<UpdateIndustryPillerForm />} />
                       <Route path="/edit/industry_usecases/form" element={<UsecaseForm />} />
                   </Routes>
               </LayoutComponent>

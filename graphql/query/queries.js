@@ -179,6 +179,13 @@ query GET_INDUSTRY_PILLER_BY_ID($id: ID!) {
       id
       attributes {
         title
+        overview
+        overview_link
+        industry {
+          data {
+            id
+          }
+        }
       }
     }
   }
@@ -218,6 +225,29 @@ mutation UpdateIndsutry($id : ID!, $title : String, $overview : String, $image: 
     overview : $overview 
     image: $image
   }) {
+    data {
+      id
+    }
+  }
+}
+`
+export const UPDATE_INDUSTRY_PILLER = gql`
+mutation UPDATE_INDUSTRY_PILLER(
+  $id: ID!
+  $title: String
+  $overview: String
+  $link: String
+  $industry_id: ID
+) {
+  updateIndustryPiller(
+    id: $id
+    data: {
+      overview: $overview
+      title: $title
+      overview_link: $link
+      industry: $industry_id
+    }
+  ) {
     data {
       id
     }
