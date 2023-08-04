@@ -13,6 +13,9 @@ import Industry from "../MainPages/Industry/Industry";
 import IndustryPiller from "../MainPages/IndustryPiller/IndustryPiller";
 import IndustryUseCases from "../MainPages/IndustryUseCases/IndustryUseCases";
 import UpdateIndustryPillerForm from "../UpdateForm/UpdateIndustryPillerForm";
+import UpdateIndustryUseCasesForm from "../UpdateForm/UpdateIndustryUseCasesForm";
+
+
 
 const Dashboard = () => {
   return (
@@ -33,7 +36,7 @@ const Dashboard = () => {
                       <Route path="/edit/industry_usecases" element={<UpdateUseCases />} />
                       <Route path="/edit/industry/form" element={<UpdateIndustryForm />} />
                       <Route path="/edit/industry_piller/form" element={<UpdateIndustryPillerForm />} />
-                      <Route path="/edit/industry_usecases/form" element={<UsecaseForm />} />
+                      <Route path="/edit/industry_usecases/form" element={<UpdateIndustryUseCasesForm />} />
                   </Routes>
               </LayoutComponent>
           </div>

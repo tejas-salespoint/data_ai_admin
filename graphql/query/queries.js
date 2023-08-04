@@ -254,3 +254,149 @@ mutation UPDATE_INDUSTRY_PILLER(
   }
 }
 `
+
+// todo :: GET_INDUSTRY_USECASES_BY_ID
+export const  GET_INDUSTRY_USECASES_FULL_BY_ID = gql`
+query GET_INDUSTRY_USECASES_FULL_BY_ID($id: ID!) {
+  usecase(id: $id) {
+    data {
+      id
+      attributes {
+        title
+        link
+        industry_piller {
+          data {
+            id
+            attributes {
+              title
+              industry {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+        key_highlights {
+          id
+          decision_makers
+          decision_making_factors
+          desired_business_objectives
+          customer_pain_points
+          proposed_technical_solution
+          other_notable_attributes
+          products
+        }
+        ideal_customer_profile {
+          id
+          industries
+          geography
+          market_cap
+          employees
+          budget
+          image_link
+          image_subtitle
+        }
+      }
+    }
+  }
+}
+
+`
+
+
+// todo :: UPDATE_INDUSTRY_USECASES
+export const  UPDATE_INDUSTRY_USECASES = gql`
+mutation UPDATE_INDUSTRY_USECASES(
+  $id: ID!
+  $usecaseTitle: String
+  $industryPillarId: ID
+  $decisionMakers: JSON
+  $decisionMakersFactors: JSON
+  $desiredBusinessObjectives: JSON
+  $customerPainPoints: JSON
+  $proposedTechnicalSolution: JSON
+  $otherNotableAttributes: JSON
+  $products: JSON
+  $industryName: String
+  $geography: String
+  $marketCap: String
+  $employees: String
+  $budget: String
+  $imageLink: String
+  $imageSubtitle: String
+  $publish: DateTime
+) {
+  updateUsecase(
+    id: $id
+    data: {
+      title: $usecaseTitle
+      industry_piller: $industryPillarId
+      key_highlights: {
+        decision_makers: $decisionMakers
+        decision_making_factors: $decisionMakersFactors
+        desired_business_objectives: $desiredBusinessObjectives
+        customer_pain_points: $customerPainPoints
+        proposed_technical_solution: $proposedTechnicalSolution
+        other_notable_attributes: $otherNotableAttributes
+        products: $products
+      }
+      ideal_customer_profile: {
+        industries: $industryName
+        geography: $geography
+        market_cap: $marketCap
+        employees: $employees
+        budget: $budget
+        image_link: $imageLink
+        image_subtitle: $imageSubtitle
+      }
+      publishedAt: $publish
+    }
+  ) {
+    data {
+      id
+      attributes {
+        title
+        link
+        industry_piller {
+          data {
+            id
+            attributes {
+              title
+              industry {
+                data {
+                  attributes {
+                    title
+                  }
+                }
+              }
+            }
+          }
+        }
+        key_highlights {
+          id
+          decision_makers
+          decision_making_factors
+          desired_business_objectives
+          customer_pain_points
+          proposed_technical_solution
+          other_notable_attributes
+          products
+        }
+        ideal_customer_profile {
+          id
+          industries
+          geography
+          market_cap
+          employees
+          budget
+          image_link
+          image_subtitle
+        }
+      }
+    }
+  }
+}
+`

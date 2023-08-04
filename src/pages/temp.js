@@ -1,24 +1,60 @@
 const data = {
-    "industryPiller": {
-        "__typename": "IndustryPillerEntityResponse",
+    "usecase": {
+        "__typename": "UsecaseEntityResponse",
         "data": {
-            "__typename": "IndustryPillerEntity",
-            "id": "3",
+            "__typename": "UsecaseEntity",
+            "id": "1",
             "attributes": {
-                "__typename": "IndustryPiller",
-                "title": "Enable Intelligent Factories",
-                "overview": "To customize products and services for end customers—and innovate at the speed that product-as-a-service requires—manufacturing customers need an agile, responsive production process. They need solutions that can help you enable a “Intelligent Factory”. The journey to intelligent factories starts with connecting factory assets—adding sensors to machines and equipment to collect data, then monitoring and adjusting operations accordingly.​\n\nUltimately, you’ll want to connect and monitor factory performance across the globe, using data from smart assets to apply operational insights and further optimize your production processes. This is where even the most advanced manufacturing service providers such as Jabil, or the Industrial Automation giants such as Rockwell Automation, Schneider Automation, Siemens etc, are finding new opportunities by augmenting operational technologies (long powered by Windows embedded technologies), with new IT capabilities such as IoT, AI, Mixed Reality and secure and compliant communication and collaboration cloud capabilities.",
-                "overview_link": "https://industryhub.transform.microsoft.com/enterprise-commercial/manufacturing?tab=overview",
-                "industry": {
-                    "__typename": "IndustryEntityResponse",
-                    "data": {
-                        "__typename": "IndustryEntity",
-                        "id": "20"
-                    }
+                "__typename": "Usecase",
+                "title": "Automated Quality Inspection",
+                "link": "automated-quality-inspection",
+                "industry_piller": {
+                    "__typename": "IndustryPillerEntityResponse",
+                    "data": null
+                },
+                "key_highlights": {
+                    "__typename": "ComponentL3KeyHighlightsKeysHighlights",
+                    "id": "1",
+                    "decision_makers": [
+                        "sdfsd",
+                        "sdfsd",
+                        "sdfsd"
+                    ],
+                    "decision_making_factors": [
+                        "sdfsdf",
+                        "sdf"
+                    ],
+                    "desired_business_objectives": [
+                        "sdfs"
+                    ],
+                    "customer_pain_points": [
+                        "sdf"
+                    ],
+                    "proposed_technical_solution": [
+                        "sdf"
+                    ],
+                    "other_notable_attributes": [
+                        "sdfs"
+                    ],
+                    "products": [
+                        "sdfsd"
+                    ]
+                },
+                "ideal_customer_profile": {
+                    "__typename": "ComponentL3KeyHighlightsIdealCustomerProfile",
+                    "id": "1",
+                    "industries": "manufactirng",
+                    "geography": "india",
+                    "market_cap": "1 billion",
+                    "employees": "456",
+                    "budget": "100 billion",
+                    "image_link": "http://google.com",
+                    "image_subtitle": "Hello submititle : manufacturing"
                 }
             }
         }
     }
 }
-
-console.log(data?.industryPiller?.data?.attributes?.industry?.data?.id)
+console.log(data?.usecase?.data?.attributes?.title)
+console.log(data?.usecase?.data?.attributes?.industry_piller.data)
+console.log(data?.usecase?.data?.attributes?.key_highlights.decision_makers)

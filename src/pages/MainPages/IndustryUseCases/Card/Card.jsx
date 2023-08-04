@@ -58,7 +58,7 @@ console.log(data)
 
         <div className="absolute z-10 inset-1 flex justify-center items-center font-bold text-white">
           <Link
-            to={"/create/industry_usecases"}
+            to={"/edit/industry_usecases/form"}
             state={{
               id: id,
             }}
