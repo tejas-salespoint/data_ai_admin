@@ -1,8 +1,8 @@
 import {gql} from "apollo-boost";
 
 export const GET_INDUSTRIES = gql`
-query GET_INDUSTRIES {
-  industries(filters: {}, pagination: {}, sort: [], publicationState: LIVE) {
+query GET_INDUSTRIES($sort: [String], $limit: Int) {
+  industries(filters: {}, pagination:  { limit: $limit }, sort: $sort, publicationState: LIVE) {
     data {
       id
       attributes {
@@ -95,6 +95,7 @@ mutation CREATE_INDSUTRY_USECASES(
   $geography: String
   $marketCap: String
   $employees: String
+  $image : JSON
   $budget: String
   $imageLink: String
   $imageSubtitle: String
@@ -119,6 +120,7 @@ mutation CREATE_INDSUTRY_USECASES(
         market_cap: $marketCap
         employees: $employees
         budget: $budget
+        image : $image
         image_link: $imageLink
         image_subtitle: $imageSubtitle
       }
@@ -158,11 +160,11 @@ query GET_INDUSTRIES_PILLER {
 `
 
 export const GET_INDUSTRY_PILLERS = gql`
-query GET_INDUSTRY_PILLERS {
+query GET_INDUSTRY_PILLERS($sort: [String], $limit: Int) {
   industryPillers(
     filters: {}
-    pagination: {}
-    sort: []
+    pagination: { limit: $limit }
+    sort: $sort
     publicationState: LIVE
   ) {
     data {
@@ -194,8 +196,8 @@ query GET_INDUSTRY_PILLER_BY_ID($id: ID!) {
 
 
 export const GET_INDUSTRY_USECASES = gql`
-query GET_INDUSTRY_USECASES {
-  usecases(filters: {}, pagination: {}, sort: [], publicationState: LIVE) {
+query GET_INDUSTRY_USECASES($sort: [String], $limit: Int) {
+  usecases(filters: {}, pagination: { limit: $limit }, sort: $sort, publicationState: LIVE) {
     data {
       id
     }
@@ -296,6 +298,7 @@ query GET_INDUSTRY_USECASES_FULL_BY_ID($id: ID!) {
           market_cap
           employees
           budget
+          image
           image_link
           image_subtitle
         }
@@ -325,6 +328,7 @@ mutation UPDATE_INDUSTRY_USECASES(
   $marketCap: String
   $employees: String
   $budget: String
+  $image : JSON
   $imageLink: String
   $imageSubtitle: String
   $publish: DateTime
@@ -349,6 +353,7 @@ mutation UPDATE_INDUSTRY_USECASES(
         market_cap: $marketCap
         employees: $employees
         budget: $budget
+        image: $image
         image_link: $imageLink
         image_subtitle: $imageSubtitle
       }
@@ -392,6 +397,7 @@ mutation UPDATE_INDUSTRY_USECASES(
           market_cap
           employees
           budget
+          image
           image_link
           image_subtitle
         }

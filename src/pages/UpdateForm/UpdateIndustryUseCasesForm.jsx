@@ -11,6 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import BackButton from "../../components/BackButton.jsx";
 import { useLocation } from "react-router-dom";
+import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
 
 const UpdateIndustryUseCasesForm = () => {
   const location = useLocation();
@@ -24,6 +25,9 @@ const UpdateIndustryUseCasesForm = () => {
       id: getId,
     },
   });
+
+  const [imageBase64, setImageBase64] = useState({});
+  const [isFormSubmitted] = useState(false);
 
   const [createIndustryUseCase] = useMutation(UPDATE_INDUSTRY_USECASES);
   const { data: indsutryPillerData } = useQuery(GET_INDSUTRIES_PILLERS);
@@ -65,52 +69,58 @@ const UpdateIndustryUseCasesForm = () => {
       setFormData({
         ...formData,
         usecaseTitle:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.title || "",
-          industryPillarId : getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.industry_piller.data?.id || null,
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.title || "",
+        industryPillarId:
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.industry_piller.data?.id || null,
         decisionMakers:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.decision_makers || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.decision_makers || [],
         decisionMakersFactors:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.decision_making_factors || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.decision_making_factors || [],
         desiredBusinessObjectives:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.desired_business_objectives || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.desired_business_objectives || [],
         customerPainPoints:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.customer_pain_points || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.customer_pain_points || [],
         proposedTechnicalSolution:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.proposed_technical_solution || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.proposed_technical_solution || [],
         otherNotableAttributes:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.other_notable_attributes || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.other_notable_attributes || [],
         products:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.key_highlights
-            ?.products || [],
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.key_highlights?.products || [],
         industryName:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.industries || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.industries || "",
         geography:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.geography || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.geography || "",
         marketCap:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.market_cap || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.market_cap || "",
         employees:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.employees || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.employees || "",
         budget:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.budget || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.budget || "",
         imageLink:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.image_link || "",
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.image_link || "",
         imageSubtitle:
-          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes?.ideal_customer_profile
-            ?.image_subtitle || "",
-      });
-      
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.image_subtitle || "",
+      }),
+        setImageBase64(
+          getUpdateIndustryUseCaseDataFilter?.usecase?.data?.attributes
+            ?.ideal_customer_profile?.image?.image || {}
+        );
     }
   }, [getUpdateIndustryUseCaseDataFilter]);
 
@@ -141,7 +151,7 @@ const UpdateIndustryUseCasesForm = () => {
     try {
       const { data } = await createIndustryUseCase({
         variables: {
-          id : getId,
+          id: getId,
           usecaseTitle,
           industryPillarId,
           decisionMakers,
@@ -396,6 +406,25 @@ const UpdateIndustryUseCasesForm = () => {
                 setValue={(value) =>
                   setFormData({ ...formData, budget: value })
                 }
+              />
+            
+            </div>
+          </div>
+          <div>
+            {/* Ideal Customer profile */}
+            <label
+              htmlFor={"idealCustomerProfile"}
+              className="block mb-4 text-sm text-blue-500 font-semibold dark:text-white"
+            >
+              Business Architecture Image
+            </label>
+            <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 border rounded-2xl p-6">
+              {/*  Upload Image */}
+              <ImageUploader
+                value={imageBase64}
+                setValue={setImageBase64}
+                label={"Business Architecture Image"}
+                isFormSubmitted={isFormSubmitted} // Pass the form submission status as a prop
               />
               <TextInput
                 label="Image Link"
