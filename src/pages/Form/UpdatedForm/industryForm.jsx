@@ -3,15 +3,15 @@ import { useMutation } from "@apollo/client";
 import {
   CREATE_INDUSTRY,
   GET_INDUSTRIES,
-} from "../../../graphql/query/queries.js";
+} from "../../../../graphql/query/queries.js";
 
-import Button from "../../components/Button.jsx";
-import { TextInput } from "../../components/TextInput.jsx";
-import { TextAreaInput } from "../../components/TextAreaInput.jsx";
-import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
-import BackButton from "../../components/BackButton.jsx";
+import Button from "../../../components/Button.jsx";
+import { TextInput } from "../../../components/TextInput.jsx";
+import { TextAreaInput } from "../../../components/TextAreaInput.jsx";
+import ImageUploader from "../../../components/FormFields/ImageUploader.jsx";
+import BackButton from "../../../components/BackButton.jsx";
 import { useNavigate } from "react-router-dom";
-import { LinkInput } from "../../components/LinkInput.jsx";
+import { LinkInput } from "../../../components/LinkInput.jsx";
 
 const IndustryForm = () => {
   const navigate = useNavigate();

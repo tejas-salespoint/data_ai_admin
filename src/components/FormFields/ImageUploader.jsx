@@ -16,7 +16,6 @@ const ImageUploader = ({ value, setValue, label, isFormSubmitted }) => {
       const reader = new FileReader();
       reader.onloadend = () => {
         const imageData = reader.result;
-        console.log(imageData);
         setValue({ image: imageData }); // Setting the image data to the parent component's state
       };
       reader.readAsDataURL(selectedFile);

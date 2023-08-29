@@ -10,8 +10,10 @@ import {TextInput} from "../../components/TextInput.jsx";
 import {SelectInput} from "../../components/SelectInput.jsx";
 import {TextAreaInput} from "../../components/TextAreaInput.jsx";
 import BackButton from "../../components/BackButton.jsx";
+import { useNavigate } from "react-router-dom";
 
 const SolutionPlaysForm = () => {
+    const navigate = useNavigate();
     const { loading: industriesLoading, data: industriesData } = useQuery(
         GET_INDUSTRIES
     );
@@ -58,6 +60,7 @@ const SolutionPlaysForm = () => {
                 industryId: null,
                 link: "",
             });
+            navigate('/industry_piller');
         } catch (error) {
             console.error(error);
         }
@@ -66,7 +69,7 @@ const SolutionPlaysForm = () => {
     if (industriesLoading) return "Loading...";
 
     return (
-        <div className="m-3 mx-6 h-[85vh]">
+        <div className="m-3 mx-6 ">
              <BackButton />
             <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
                 Create an Industry Piller

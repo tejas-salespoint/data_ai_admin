@@ -8,6 +8,8 @@ const Industry = () => {
 
     if (loading) return "Loading...";
     if (error) return "Error";
+
+    console.log(data)
     
     return (
         <>

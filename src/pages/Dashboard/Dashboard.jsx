@@ -2,7 +2,7 @@ import LayoutComponent from "../../components/Layout";
 import Navbar from "../../components/Navbar";
 import Sidebar from "../../components/Sidebar";
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import IndustryForm from "../Form/IndustryForm.jsx";
+import IndustryForm from "../Form/UpdatedForm/industryForm";
 import SolutionPlaysForm from "../Form/IndustryPillerForm.jsx";
 import UsecaseForm from "../Form/usecaseForm.jsx";
 import Home from "../Home.jsx";
@@ -30,6 +30,11 @@ const Dashboard = () => {
                       <Route path="/industry_piller" element={<IndustryPiller />} />
                       <Route path="/indsutry_use_cases" element={<IndustryUseCases />} />
                       <Route path="/create/industry" element={<IndustryForm />} />
+
+                      {/* updated routes */}
+                      <Route path="/industry/create" element={<IndustryForm />} />
+                      {/* updated routes  end */}
+
                       <Route path="/create/industry_piller" element={<SolutionPlaysForm />} />
                       <Route path="/create/industry_usecases" element={<UsecaseForm />} />
                       <Route path="/edit/industry_piller" element={<Updateindsutry />} />

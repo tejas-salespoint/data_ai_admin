@@ -63,7 +63,7 @@ const UpdateIndustryUseCasesForm = () => {
       getUpdateIndustryUseCaseData();
     }
   }, [getId, getUpdateIndustryUseCaseData]);
-
+console.log(getUpdateIndustryUseCaseDataFilter)
   useEffect(() => {
     if (getUpdateIndustryUseCaseDataFilter) {
       setFormData({
@@ -196,6 +196,8 @@ const UpdateIndustryUseCasesForm = () => {
       console.error(error);
     }
   };
+
+
 
   return (
     <div className="m-3 mx-6">

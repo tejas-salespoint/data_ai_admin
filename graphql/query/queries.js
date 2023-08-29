@@ -17,14 +17,14 @@ query GET_INDUSTRIES($sort: [String], $limit: Int) {
 `
 
 export const GET_INDUSTRY_BY_ID = gql`
-query GET_INDUSTRIES_BY_ID($id : ID!) {
-  industries(filters: { id: { eq: $id } }, publicationState: LIVE) {
+query GET_INDUSTRY_BY_ID($id : ID!){
+  industry(id: $id) {
     data {
       id
       attributes {
         title
-        overview
         link
+        overview
         image
       }
     }
@@ -35,6 +35,7 @@ query GET_INDUSTRIES_BY_ID($id : ID!) {
 export const CREATE_INDUSTRY = gql`
 mutation CREATE_INDUSTRY(
   $title: String
+  $link : String
   $overview: String
   $industry_piller: [ID]
   $publish: DateTime
@@ -44,6 +45,7 @@ mutation CREATE_INDUSTRY(
     data: {
       title: $title
       overview: $overview
+      link : $link
       industry_pillers: $industry_piller
       publishedAt: $publish
       image: $image
@@ -221,9 +223,10 @@ query GET_INDUSTRY_USECASE_BY_ID ($id: ID!){
 
 
 export const UPDATE_INDUSTRY = gql`
-mutation UpdateIndsutry($id : ID!, $title : String, $overview : String, $image: JSON) {
+mutation UpdateIndsutry($id : ID!, $title : String, $link : String, $overview : String, $image: JSON) {
   updateIndustry(id: $id, data: {
     title : $title
+    link : $link
     overview : $overview 
     image: $image
   }) {
@@ -237,6 +240,7 @@ export const UPDATE_INDUSTRY_PILLER = gql`
 mutation UPDATE_INDUSTRY_PILLER(
   $id: ID!
   $title: String
+  $link : String
   $overview: String
   $link: String
   $industry_id: ID
@@ -245,6 +249,7 @@ mutation UPDATE_INDUSTRY_PILLER(
     id: $id
     data: {
       overview: $overview
+      link : $link
       title: $title
       overview_link: $link
       industry: $industry_id

@@ -99,7 +99,7 @@ const UpdateIndustryPillerForm = () => {
   
     if (industriesLoading) return "Loading...";
   return (
-    <div className="m-3 mx-6 h-[85vh]">
+    <div className="m-3 mx-6">
       <BackButton />
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Update an Industry Piller

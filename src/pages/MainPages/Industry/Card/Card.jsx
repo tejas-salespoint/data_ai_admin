@@ -19,7 +19,8 @@ const IndustryCard = ({ id }) => {
     getIndustryData(); // Fetch the industry detail when the component mounts
   }, [getIndustryData]);
 
-  const item = data?.industries?.data[0]
+ 
+  const item = data?.industry?.data
   
 
   if (loading) {
@@ -36,7 +37,7 @@ const IndustryCard = ({ id }) => {
     >
       <div>
         <img
-          className="h-30 w-50"
+          className="min-h-[11rem] "
           src={
             item?.attributes?.image?.image ||
             "https://media.istockphoto.com/id/582256640/photo/oil-refinery-chemical-petrochemical-plant.jpg?s=612x612&w=0&k=20&c=BEdsHVe2vUfzRTb9KcsCS_tCH6_R_nKLKkOQCht8AKo="
@@ -48,7 +49,7 @@ const IndustryCard = ({ id }) => {
       <div>
         <div className="h-30 w-50 flex justify-center items-center backdrop-brightness-50 absolute z-10 inset-1 group-hover:hidden font-bold text-white">
           <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
-            {item?.attributes.title}
+            {item?.attributes?.title}
           </button>
         </div>
 

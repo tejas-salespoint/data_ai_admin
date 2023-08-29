@@ -10,8 +10,10 @@ import {
 import { useState } from "react";
 import BackButton from "../../components/BackButton.jsx";
 import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
+import { useNavigate } from "react-router-dom";
 
 const usecaseForm = () => {
+  const navigate = useNavigate();
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [createIndustryUseCase, { loading }] = useMutation(
     CREATE_INDUSTRY_USECASES
@@ -123,6 +125,7 @@ const usecaseForm = () => {
       });
       setImageBase64({});
       setIsFormSubmitted(true);
+      navigate('/indsutry_use_cases');
     } catch (error) {
       // Handle error
       console.error(error);
