@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { GET_INDUSTRY_BY_ID } from "../../../../../graphql/query/queries";
 import { useEffect } from "react";
+import { MdDelete } from "react-icons/md";
 
 // eslint-disable-next-line react/prop-types
 const IndustryCard = ({ id }) => {
@@ -19,9 +20,7 @@ const IndustryCard = ({ id }) => {
     getIndustryData(); // Fetch the industry detail when the component mounts
   }, [getIndustryData]);
 
- 
-  const item = data?.industry?.data
-  
+  const item = data?.industry?.data;
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading message while data is being fetched
@@ -30,7 +29,6 @@ const IndustryCard = ({ id }) => {
   if (error) return "Error :)";
 
   return (
-
     <div
       key={item?.id}
       className="group relative flex bg-cover bg-center bg-no-repeat items-center justify-center"
@@ -54,17 +52,30 @@ const IndustryCard = ({ id }) => {
         </div>
 
         <div className="absolute z-10 inset-1 flex justify-center items-center font-bold text-white">
-          <Link
-            to={"/edit/industry/form"}
-            state={{
-              id: id,
-            }}
-          >
-            <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
-              <FaEdit className="inline-block mr-2 text-lg" />
-              Edit
-            </button>
-          </Link>
+          <div className="flex flex-col gap-3 justify-center items-center">
+            <Link
+              to={"/edit/industry/form"}
+              state={{
+                id: id,
+              }}
+            >
+              <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+                <FaEdit className="inline-block mr-2 text-lg" />
+                Edit
+              </button>
+            </Link>
+            <Link
+              to={"/edit/industry/form"}
+              state={{
+                id: id,
+              }}
+            >
+              <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue hover:bg-red-600 bg-white group-hover:text-black font-bold px-5 rounded-full">
+                <MdDelete className="inline-block mr-2 text-lg" />
+                Delete
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

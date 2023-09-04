@@ -11,13 +11,19 @@ import { TextInput } from "../../components/TextInput.jsx";
 
 import { TextAreaInput } from "../../components/TextAreaInput.jsx";
 import { useLocation } from "react-router-dom";
-import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
+
 import BackButton from "../../components/BackButton.jsx";
 import { LinkInput } from "../../components/LinkInput.jsx";
+import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
+import MediaLibrary from "../../components/MediaLibrary/index.jsx";
 
 const UpdateIndustryForm = () => {
   const location = useLocation();
   const [getId] = useState(location?.state?.id);
+  const [imageid, setImageId] = useState({
+    url: null,
+    id: null,
+  });
 
   const [getUpdateIndustryData, { data: getUpdateIndustryDataFilter }] =
     useLazyQuery(GET_INDUSTRY_BY_ID, {
@@ -56,9 +62,12 @@ const UpdateIndustryForm = () => {
           getUpdateIndustryDataFilter?.industry?.data?.attributes?.link || "",
         industryPillers: [],
       });
-      setImageBase64(
-        getUpdateIndustryDataFilter?.industry?.data?.attributes?.image?.image
-      );
+      setImageId({
+        url: getUpdateIndustryDataFilter?.industry?.data?.attributes
+          ?.industry_image?.data?.attributes?.url,
+        id: getUpdateIndustryDataFilter?.industry?.data?.attributes
+          ?.industry_image?.data?.id,
+      });
     }
   }, [getUpdateIndustryDataFilter]);
 
@@ -73,12 +82,11 @@ const UpdateIndustryForm = () => {
           title,
           link,
           overview,
-          image: imageBase64,
+          image: imageid?.id,
         },
         refetchQueries: [{ query: GET_INDUSTRIES }],
       });
 
-      
       // Clear form fields on successful submission
       setFormData({
         title: "",
@@ -131,20 +139,34 @@ const UpdateIndustryForm = () => {
                         value={formData.industryPillers}
                         setValue={(value) => setFormData({ ...formData, industryPillers: value })}
                     /> */}
-          <TextAreaInput
-            value={formData.overview || "Loading ..."}
+          {/* <TextAreaInput
+            value={formData?.overview || "Loading ..."}
             setValue={(value) => setFormData({ ...formData, overview: value })}
             label="Overview"
             id="description"
             rows={8}
             placeholder="Your description here"
-          />
-          <ImageUploader
+          /> */}
+
+          <div className="sm:col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Overview
+            </label>
+            <MainTextEditor value={formData?.overview || "Loading ..."}  setValue={(value) => setFormData({ ...formData, overview: value })} />
+          </div>
+
+          <div className="sm:col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Image
+            </label>
+            <MediaLibrary setImageId={setImageId} imageid={imageid} />
+          </div>
+          {/* <ImageUploader
             value={imageBase64}
             setValue={setImageBase64}
             label={"Industry Image"}
             isFormSubmitted={isFormSubmitted}
-          />
+          /> */}
         </div>
 
         <Button

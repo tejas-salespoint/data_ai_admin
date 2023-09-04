@@ -7,15 +7,16 @@ import {
 
 import Button from "../../../components/Button.jsx";
 import { TextInput } from "../../../components/TextInput.jsx";
-import { TextAreaInput } from "../../../components/TextAreaInput.jsx";
-import ImageUploader from "../../../components/FormFields/ImageUploader.jsx";
 import BackButton from "../../../components/BackButton.jsx";
 import { useNavigate } from "react-router-dom";
 import { LinkInput } from "../../../components/LinkInput.jsx";
+import MediaLibrary from "../../../components/MediaLibrary/index.jsx";
+import MainTextEditor from "../../../components/TextEditor/MainTextEditor.jsx";
 
 const IndustryForm = () => {
   const navigate = useNavigate();
   const [createIndustry, { loading }] = useMutation(CREATE_INDUSTRY);
+  const [imageid, setImageId] = useState({});
 
   const [formData, setFormData] = useState({
     title: "",
@@ -40,7 +41,7 @@ const IndustryForm = () => {
           link,
           overview,
           publish: publishedAt,
-          image: imageBase64,
+          image: imageid?.id,
         },
         refetchQueries: [{ query: GET_INDUSTRIES }],
       });
@@ -61,6 +62,15 @@ const IndustryForm = () => {
       console.error(error);
     }
   };
+
+  function handleClearClick() {
+    setFormData({
+      title: "",
+      link: "",
+      overview: "",
+      industryPillers: [],
+    });
+  }
 
   return (
     <div className="m-3 mx-6 ">
@@ -94,7 +104,7 @@ const IndustryForm = () => {
             required
           />
 
-          <TextAreaInput
+          {/* <TextAreaInput
             value={formData.overview}
             setValue={(value) =>
               setFormData((prevData) => ({ ...prevData, overview: value }))
@@ -103,21 +113,46 @@ const IndustryForm = () => {
             id="description"
             rows={8}
             placeholder="Your description here"
-          />
-          <ImageUploader
-            value={imageBase64}
-            setValue={setImageBase64}
-            label={"Image"}
-            isFormSubmitted={isFormSubmitted} // Pass the form submission status as a prop
-          />
+          /> */}
+
+          <div className="sm:col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Overview
+            </label>
+            <MainTextEditor
+              value={formData.overview}
+              setValue={(value) =>
+                setFormData((prevData) => ({ ...prevData, overview: value }))
+              }
+            />
+          </div>
+
+          {/* Media libaray */}
+
+          <div className="sm:col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Image
+            </label>
+            <MediaLibrary setImageId={setImageId} imageid={imageid} />
+          </div>
+
+          {/* <p>Image id : {imageid.id } {imageid.url}</p> */}
+          {/* <img src={imageid.url} alt="imageid"  /> */}
         </div>
 
-        <Button
-          type="submit"
-          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
-          label="Create"
-          loading={loading}
-        />
+        <div className="flex gap-3 justify-end items-center">
+          <Button
+            onClick={handleClearClick}
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
+            label="Clear"
+          />
+          <Button
+            type="submit"
+            className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
+            label="Create"
+            loading={loading}
+          />
+        </div>
       </form>
     </div>
   );

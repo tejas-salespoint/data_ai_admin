@@ -1,16 +1,12 @@
+/* eslint-disable no-useless-escape */
 import { useEffect, useState } from "react";
 
 // Define the LinkInput component
 // eslint-disable-next-line react/prop-types
 export  function LinkInput({
     
-  label,
-  value,
-  setValue,
-  name,
-  placeholder,
-  required,
-  size,
+  // eslint-disable-next-line react/prop-types
+  label,value,setValue,name,placeholder,required,size,
 }) {
   const [slug, setSlug] = useState("");
 

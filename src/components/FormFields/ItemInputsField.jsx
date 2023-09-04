@@ -17,7 +17,7 @@ const ItemInput = () => {
 
     const handleSaveItems = () => {
         // Perform any necessary logic with the items array
-        console.log(items);
+        
     };
 
     return (

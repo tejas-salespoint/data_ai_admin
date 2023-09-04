@@ -17,7 +17,7 @@ query GET_INDUSTRIES($sort: [String], $limit: Int) {
 `
 
 export const GET_INDUSTRY_BY_ID = gql`
-query GET_INDUSTRY_BY_ID($id : ID!){
+query GET_INDUSTRY_BY_ID($id: ID!) {
   industry(id: $id) {
     data {
       id
@@ -25,7 +25,14 @@ query GET_INDUSTRY_BY_ID($id : ID!){
         title
         link
         overview
-        image
+        industry_image {
+          data {
+            id
+            attributes {
+              url
+            }
+          }
+        }
       }
     }
   }
@@ -35,20 +42,20 @@ query GET_INDUSTRY_BY_ID($id : ID!){
 export const CREATE_INDUSTRY = gql`
 mutation CREATE_INDUSTRY(
   $title: String
-  $link : String
+  $link: String
   $overview: String
   $industry_piller: [ID]
   $publish: DateTime
-  $image: JSON
+  $image: ID
 ) {
   createIndustry(
     data: {
       title: $title
       overview: $overview
-      link : $link
+      link: $link
       industry_pillers: $industry_piller
       publishedAt: $publish
-      image: $image
+      industry_image: $image
     }
   ) {
     data {
@@ -223,12 +230,12 @@ query GET_INDUSTRY_USECASE_BY_ID ($id: ID!){
 
 
 export const UPDATE_INDUSTRY = gql`
-mutation UpdateIndsutry($id : ID!, $title : String, $link : String, $overview : String, $image: JSON) {
+mutation UpdateIndsutry($id : ID!, $title : String, $link : String, $overview : String,  $image: ID) {
   updateIndustry(id: $id, data: {
     title : $title
     link : $link
     overview : $overview 
-    image: $image
+    industry_image: $image
   }) {
     data {
       id
@@ -406,6 +413,27 @@ mutation UPDATE_INDUSTRY_USECASES(
           image_link
           image_subtitle
         }
+      }
+    }
+  }
+}
+`
+
+export const  GET_MEDIA_LIBRARY_QUERY = gql`
+query GET_MEDIA_LIBRARY {
+  uploadFiles(filters: {}, pagination: {}, sort: []) {
+    data {
+      id
+      attributes {
+        alternativeText
+        caption
+        createdAt
+        ext
+        name
+        previewUrl
+        url
+        size
+        mime
       }
     }
   }

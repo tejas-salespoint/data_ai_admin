@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // eslint-disable-next-line react/prop-types
 const ImageUploader = ({ value, setValue, label, isFormSubmitted }) => {
   const [selectedFile, setSelectedFile] = useState(null);
-  console.log(value);
+ 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
