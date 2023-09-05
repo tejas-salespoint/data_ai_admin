@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 import { SelectInput } from "../../components/SelectInput.jsx";
 import { TextInput } from "../../components/TextInput.jsx";
 import DynamicInputFields from "../../components/FormFields/DynamicInputFields.jsx";
@@ -11,10 +12,13 @@ import { useState } from "react";
 import BackButton from "../../components/BackButton.jsx";
 import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
 import { useNavigate } from "react-router-dom";
+import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
+import MediaLibrary from "../../components/MediaLibrary/index.jsx"
 
 const usecaseForm = () => {
   const navigate = useNavigate();
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const [imageid, setImageId] = useState({});
+  
   const [createIndustryUseCase, { loading }] = useMutation(
     CREATE_INDUSTRY_USECASES
   );
@@ -30,20 +34,20 @@ const usecaseForm = () => {
     label: `${item?.attributes?.title} ( ${item?.attributes?.industry?.data?.attributes?.title} )`,
   }));
 
-  const [imageBase64, setImageBase64] = useState({});
+  
   const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const [formData, setFormData] = useState({
     usecaseTitle: "",
     industryPillarId: null,
-    decisionMakers: [],
-    decisionMakersFactors: [],
-    desiredBusinessObjectives: [],
-    customerPainPoints: [],
-    proposedTechnicalSolution: [],
-    otherNotableAttributes: [],
-    products: [],
+    decisionMakers: "",
+    decisionMakersFactors: "",
+    desiredBusinessObjectives: "",
+    customerPainPoints: "",
+    proposedTechnicalSolution: "",
+    otherNotableAttributes: "",
+    products: "",
     industryName: "",
     geography: "",
     marketCap: "",
@@ -94,7 +98,7 @@ const usecaseForm = () => {
           marketCap,
           employees,
           budget,
-          image : imageBase64,
+          image : imageid?.id,
           imageLink,
           imageSubtitle,
           publish: publishedAt,
@@ -108,22 +112,23 @@ const usecaseForm = () => {
       setFormData({
         usecaseTitle: "",
         industryPillarId: null,
-        decisionMakers: [],
-        decisionMakersFactors: [],
-        desiredBusinessObjectives: [],
-        customerPainPoints: [],
-        proposedTechnicalSolution: [],
-        otherNotableAttributes: [],
-        products: [],
+        decisionMakers: "",
+        decisionMakersFactors: "",
+        desiredBusinessObjectives: "",
+        customerPainPoints: "",
+        proposedTechnicalSolution: "",
+        otherNotableAttributes: "",
+        products: "",
         industryName: "",
         geography: "",
         marketCap: "",
         employees: "",
         budget: "",
+        image : "",
         imageLink: "",
         imageSubtitle: "",
       });
-      setImageBase64({});
+     
       setIsFormSubmitted(true);
       navigate('/indsutry_use_cases');
     } catch (error) {
@@ -176,109 +181,98 @@ const usecaseForm = () => {
             </label>
 
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 border rounded-2xl p-6">
-              {/* Decision Makers */}
-              <div>
-                <DynamicInputFields
-                  label={"Decision Makers"}
-                  name={"decisionMakers"}
-                  id={"decisionMakers"}
-                  placeholder={"Enter names of decision makers..."}
-                  value={formData.decisionMakers}
-                  setValue={(value) =>
-                    setFormData({ ...formData, decisionMakers: value })
-                  }
-                />
-              </div>
+               {/* Decision Makers */}
+
+               <MainTextEditor
+                label={"Decision Makers"}
+                value={formData.decisionMakers}
+                setValue={(value) =>
+                  setFormData({ ...formData, decisionMakers: value })
+                }
+              />
 
               {/* Decision Makers Factors */}
-              <div>
-                <DynamicInputFields
-                  label={"Decision Makers Factors"}
-                  name={"decisionMakersFactors"}
-                  id={"decisionMakersFactors"}
-                  placeholder={"Enter factors influencing decision makers..."}
-                  value={formData.decisionMakersFactors}
-                  setValue={(value) =>
-                    setFormData({ ...formData, decisionMakersFactors: value })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                name={"decisionMakersFactors"}
+                id={"decisionMakersFactors"}
+                placeholder={"Enter factors influencing decision makers..."}
+                value={formData.decisionMakersFactors}
+                setValue={(value) =>
+                  setFormData({ ...formData, decisionMakersFactors: value })
+                }
+              />
 
               {/* Desired Business Objectives */}
-              <div>
-                <DynamicInputFields
-                  label={"Desired Business Objectives"}
-                  name={"desiredBusinessObjectives"}
-                  id={"desiredBusinessObjectives"}
-                  placeholder={"Enter desired business objectives..."}
-                  value={formData.desiredBusinessObjectives}
-                  setValue={(value) =>
-                    setFormData({
-                      ...formData,
-                      desiredBusinessObjectives: value,
-                    })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                label={"Desired Business Objectives"}
+                name={"desiredBusinessObjectives"}
+                id={"desiredBusinessObjectives"}
+                placeholder={"Enter desired business objectives..."}
+                value={formData.desiredBusinessObjectives}
+                setValue={(value) =>
+                  setFormData({
+                    ...formData,
+                    desiredBusinessObjectives: value,
+                  })
+                }
+              />
 
               {/* Customer Pain Points */}
-              <div>
-                <DynamicInputFields
-                  label={"Customer Pain Points"}
-                  name={"customerPainPoints"}
-                  id={"customerPainPoints"}
-                  placeholder={"Enter customer pain points..."}
-                  value={formData.customerPainPoints}
-                  setValue={(value) =>
-                    setFormData({ ...formData, customerPainPoints: value })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                label={"Customer Pain Points"}
+                name={"customerPainPoints"}
+                id={"customerPainPoints"}
+                placeholder={"Enter customer pain points..."}
+                value={formData.customerPainPoints}
+                setValue={(value) =>
+                  setFormData({ ...formData, customerPainPoints: value })
+                }
+              />
 
               {/* Proposed Technical Solution */}
-              <div>
-                <DynamicInputFields
-                  label={"Proposed Technical Solution"}
-                  name={"proposedTechnicalSolution"}
-                  id={"proposedTechnicalSolution"}
-                  placeholder={"Enter proposed technical solution..."}
-                  value={formData.proposedTechnicalSolution}
-                  setValue={(value) =>
-                    setFormData({
-                      ...formData,
-                      proposedTechnicalSolution: value,
-                    })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                label={"Proposed Technical Solution"}
+                name={"proposedTechnicalSolution"}
+                id={"proposedTechnicalSolution"}
+                placeholder={"Enter proposed technical solution..."}
+                value={formData.proposedTechnicalSolution}
+                setValue={(value) =>
+                  setFormData({
+                    ...formData,
+                    proposedTechnicalSolution: value,
+                  })
+                }
+              />
 
               {/* Other Notable Attributes */}
-              <div>
-                <DynamicInputFields
-                  label={"Other Notable Attributes"}
-                  name={"otherNotableAttributes"}
-                  id={"otherNotableAttributes"}
-                  placeholder={"Enter other notable attributes..."}
-                  value={formData.otherNotableAttributes}
-                  setValue={(value) =>
-                    setFormData({ ...formData, otherNotableAttributes: value })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                label={"Other Notable Attributes"}
+                name={"otherNotableAttributes"}
+                id={"otherNotableAttributes"}
+                placeholder={"Enter other notable attributes..."}
+                value={formData.otherNotableAttributes}
+                setValue={(value) =>
+                  setFormData({ ...formData, otherNotableAttributes: value })
+                }
+              />
 
               {/* Products */}
-              <div>
-                <DynamicInputFields
-                  label={"Products"}
-                  name={"products"}
-                  id={"products"}
-                  placeholder={"Enter products..."}
-                  value={formData.products}
-                  setValue={(value) =>
-                    setFormData({ ...formData, products: value })
-                  }
-                />
-              </div>
+
+              <MainTextEditor
+                label={"Products"}
+                name={"products"}
+                id={"products"}
+                placeholder={"Enter products..."}
+                value={formData.products}
+                setValue={(value) =>
+                  setFormData({ ...formData, products: value })
+                }
+              />
             </div>
           </div>
 
@@ -353,12 +347,18 @@ const usecaseForm = () => {
             </label>
             <div className="grid gap-4 sm:grid-cols-2 sm:gap-6 border rounded-2xl p-6">
               {/*  Upload Image */}
-              <ImageUploader
+              {/* <ImageUploader
                 value={imageBase64}
                 setValue={setImageBase64}
                 label={"Business Architecture Image"}
                 isFormSubmitted={isFormSubmitted} // Pass the form submission status as a prop
-              />
+              /> */}
+               <div className="sm:col-span-2">
+                <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                  Image
+                </label>
+                <MediaLibrary setImageId={setImageId} imageid={imageid} />
+              </div>
               <TextInput
                 label="Image Link"
                 name="imageLink"

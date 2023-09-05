@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { LinkInput } from "../../../components/LinkInput.jsx";
 import MediaLibrary from "../../../components/MediaLibrary/index.jsx";
 import MainTextEditor from "../../../components/TextEditor/MainTextEditor.jsx";
+import DeleteDialog from "../../../components/DeleteDialog.jsx";
 
 const IndustryForm = () => {
   const navigate = useNavigate();
@@ -75,6 +76,7 @@ const IndustryForm = () => {
   return (
     <div className="m-3 mx-6 ">
       <BackButton />
+    
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Create an Industry
       </h2>

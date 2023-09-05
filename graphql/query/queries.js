@@ -9,7 +9,6 @@ query GET_INDUSTRIES($sort: [String], $limit: Int) {
         title
         overview
         link
-        image
       }
     }
   }
@@ -93,18 +92,18 @@ export const CREATE_INDUSTRY_USECASES = gql`
 mutation CREATE_INDSUTRY_USECASES(
   $usecaseTitle: String
   $industryPillarId: ID
-  $decisionMakers: JSON
-  $decisionMakersFactors: JSON
-  $desiredBusinessObjectives: JSON
-  $customerPainPoints: JSON
-  $proposedTechnicalSolution: JSON
-  $otherNotableAttributes: JSON
-  $products: JSON
+  $decisionMakers: String
+  $decisionMakersFactors: String
+  $desiredBusinessObjectives: String
+  $customerPainPoints: String
+  $proposedTechnicalSolution: String
+  $otherNotableAttributes: String
+  $products: String
   $industryName: String
   $geography: String
   $marketCap: String
   $employees: String
-  $image : JSON
+  $image : ID
   $budget: String
   $imageLink: String
   $imageSubtitle: String
@@ -249,7 +248,6 @@ mutation UPDATE_INDUSTRY_PILLER(
   $title: String
   $link : String
   $overview: String
-  $link: String
   $industry_id: ID
 ) {
   updateIndustryPiller(
@@ -310,7 +308,14 @@ query GET_INDUSTRY_USECASES_FULL_BY_ID($id: ID!) {
           market_cap
           employees
           budget
-          image
+          image {
+            data {
+              id
+              attributes {
+                url
+              }
+            }
+          }
           image_link
           image_subtitle
         }
@@ -328,19 +333,19 @@ mutation UPDATE_INDUSTRY_USECASES(
   $id: ID!
   $usecaseTitle: String
   $industryPillarId: ID
-  $decisionMakers: JSON
-  $decisionMakersFactors: JSON
-  $desiredBusinessObjectives: JSON
-  $customerPainPoints: JSON
-  $proposedTechnicalSolution: JSON
-  $otherNotableAttributes: JSON
-  $products: JSON
+  $decisionMakers: String
+  $decisionMakersFactors: String
+  $desiredBusinessObjectives: String
+  $customerPainPoints: String
+  $proposedTechnicalSolution: String
+  $otherNotableAttributes: String
+  $products: String
   $industryName: String
   $geography: String
   $marketCap: String
   $employees: String
   $budget: String
-  $image : JSON
+  $image: ID
   $imageLink: String
   $imageSubtitle: String
   $publish: DateTime
@@ -409,7 +414,13 @@ mutation UPDATE_INDUSTRY_USECASES(
           market_cap
           employees
           budget
-          image
+          image {
+            data {
+              attributes {
+                url
+              }
+            }
+          }
           image_link
           image_subtitle
         }
@@ -417,6 +428,7 @@ mutation UPDATE_INDUSTRY_USECASES(
     }
   }
 }
+
 `
 
 export const  GET_MEDIA_LIBRARY_QUERY = gql`

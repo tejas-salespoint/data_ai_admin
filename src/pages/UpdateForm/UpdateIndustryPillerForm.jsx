@@ -1,103 +1,127 @@
-import  { useEffect, useState, useMemo } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useLazyQuery, useMutation, useQuery } from "@apollo/client";
-import { GET_INDUSTRIES, GET_INDUSTRY_PILLER_BY_ID, UPDATE_INDUSTRY_PILLER } from "../../../graphql/query/queries.js";
+import {
+  GET_INDUSTRIES,
+  GET_INDUSTRY_PILLER_BY_ID,
+  UPDATE_INDUSTRY_PILLER,
+} from "../../../graphql/query/queries.js";
 import Button from "../../components/Button.jsx";
 import { TextInput } from "../../components/TextInput.jsx";
 import { SelectInput } from "../../components/SelectInput.jsx";
-import { TextAreaInput } from "../../components/TextAreaInput.jsx";
+
 import BackButton from "../../components/BackButton.jsx";
 import { useLocation } from "react-router-dom";
+import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
 
 const UpdateIndustryPillerForm = () => {
-    const location = useLocation();
-    const getId = location?.state?.id;
-  
-    const [getUpdateIndustryPillerData, { data: getUpdateIndustryPillerDataFilter, refetch: refetchIndustryPillers }] =
-      useLazyQuery(GET_INDUSTRY_PILLER_BY_ID, {
-        variables: {
-          id: getId,
-        },
-      });
-  
-    const { loading: industriesLoading, data: industriesData, refetch: refetchIndustries } = useQuery(GET_INDUSTRIES);
-  
-    const options = useMemo(() => {
-      return industriesData?.industries?.data?.map((item) => ({
+  const location = useLocation();
+  const getId = location?.state?.id;
+
+  const [
+    getUpdateIndustryPillerData,
+    {
+      data: getUpdateIndustryPillerDataFilter,
+      refetch: refetchIndustryPillers,
+    },
+  ] = useLazyQuery(GET_INDUSTRY_PILLER_BY_ID, {
+    variables: {
+      id: getId,
+    },
+  });
+
+  const {
+    loading: industriesLoading,
+    data: industriesData,
+    refetch: refetchIndustries,
+  } = useQuery(GET_INDUSTRIES);
+
+  const options = useMemo(() => {
+    return (
+      industriesData?.industries?.data?.map((item) => ({
         value: item.id,
         label: item.attributes.title,
-      })) || [];
-    }, [industriesData]);
-  
-    const [updateIndustryPiller, { loading: mutationLoading }] = useMutation(UPDATE_INDUSTRY_PILLER, {
+      })) || []
+    );
+  }, [industriesData]);
+
+  const [updateIndustryPiller, { loading: mutationLoading }] = useMutation(
+    UPDATE_INDUSTRY_PILLER,
+    {
       onError: (error) => {
         console.error(error);
       },
-    });
-  
-    const [formData, setFormData] = useState({
-      title: "",
-      overview: "",
-      industryId: null,
-      link: "",
-    });
-  
-    useEffect(() => {
-      if (getId) {
-        getUpdateIndustryPillerData();
-      }
-    }, [getId, getUpdateIndustryPillerData]);
-  
-    useEffect(() => {
-        if (getUpdateIndustryPillerDataFilter) {
-          setFormData({
-            title:
-              getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes?.title || "",
-            overview:
-              getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes?.overview || "",
-            industryId: getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes?.industry?.data?.id,
-            link:
-              getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes?.overview_link || "",
-          });
-        }
-      }, [getUpdateIndustryPillerDataFilter]);
-  
-      const handleSubmit = async (event) => {
-        event.preventDefault();
-    
-        const { title, overview, industryId, link } = formData;
-        const publishedAt = new Date().toISOString();
-    
-        try {
-          const { data } = await updateIndustryPiller({
-            variables: {
-              id: getId,
-              title,
-              overview,
-              industry_id: industryId,
-              learn_more_link: link,
-              publish: publishedAt,
-            },
-          });
-    
-          console.log(data);
-    
-          // Clear form fields on successful submission
-          setFormData({
-            title: "",
-            overview: "",
-            industryId: null,
-            link: "",
-          });
-    
-          // Refresh the industry data after successful submission
-          refetchIndustryPillers();
-          refetchIndustries();
-        } catch (error) {
-          console.error(error);
-        }
-      };
-  
-    if (industriesLoading) return "Loading...";
+    }
+  );
+
+  const [formData, setFormData] = useState({
+    title: "",
+    overview: "",
+    industryId: null,
+    link: "",
+  });
+
+  useEffect(() => {
+    if (getId) {
+      getUpdateIndustryPillerData();
+    }
+  }, [getId, getUpdateIndustryPillerData]);
+
+  useEffect(() => {
+    if (getUpdateIndustryPillerDataFilter) {
+      setFormData({
+        title:
+          getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes
+            ?.title || "",
+        overview:
+          getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes
+            ?.overview || "",
+        industryId:
+          getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes
+            ?.industry?.data?.id,
+        link:
+          getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes
+            ?.overview_link || "",
+      });
+    }
+  }, [getUpdateIndustryPillerDataFilter]);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const { title, overview, industryId, link } = formData;
+    const publishedAt = new Date().toISOString();
+
+    try {
+      const { data } = await updateIndustryPiller({
+        variables: {
+          id: getId,
+          title,
+          overview,
+          industry_id: industryId,
+          learn_more_link: link,
+          publish: publishedAt,
+        },
+      });
+
+      
+
+      // Clear form fields on successful submission
+      setFormData({
+        title: "",
+        overview: "",
+        industryId: null,
+        link: "",
+      });
+
+      // Refresh the industry data after successful submission
+      refetchIndustryPillers();
+      refetchIndustries();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  if (industriesLoading) return "Loading...";
   return (
     <div className="m-3 mx-6">
       <BackButton />
@@ -120,20 +144,28 @@ const UpdateIndustryPillerForm = () => {
           />
           <SelectInput
             value={formData.industryId || "Loading ..."}
-            setValue={(value) => setFormData({ ...formData, industryId: value })}
+            setValue={(value) =>
+              setFormData({ ...formData, industryId: value })
+            }
             label="Industry"
             size={1}
             id="category"
+            form_link={'/create/industry'}
             options={options}
           />
-          <TextAreaInput
-            value={formData.overview || "Loading ..."}
-            setValue={(value) => setFormData({ ...formData, overview: value })}
-            label="Overview"
-            id="description"
-            rows={8}
-            placeholder="Your description here"
-          />
+
+          <div className="sm:col-span-2">
+            <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+              Overview
+            </label>
+            <MainTextEditor
+              value={formData.overview || "Loading ..."}
+              setValue={(value) =>
+                setFormData({ ...formData, overview: value })
+              }
+            />
+          </div>
+
           <TextInput
             value={formData.link || "Loading ..."}
             setValue={(value) => setFormData({ ...formData, link: value })}

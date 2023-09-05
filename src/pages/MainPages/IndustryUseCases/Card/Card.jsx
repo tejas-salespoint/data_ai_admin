@@ -61,7 +61,7 @@ const IndustryUseCasesCard = ({ id }) => {
                 id: id,
               }}
             >
-              <button className="p-2 text-xl flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
+              <button className="p-2 text-sm flex items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
                 <FaEdit className="inline-block mr-2 text-lg" />
                 Edit
               </button>

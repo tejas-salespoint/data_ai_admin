@@ -2,8 +2,9 @@ import { useLazyQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
 import { GET_INDUSTRY_BY_ID } from "../../../../../graphql/query/queries";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import DeleteDialog from "../../../../components/DeleteDialog";
 
 // eslint-disable-next-line react/prop-types
 const IndustryCard = ({ id }) => {
@@ -15,6 +16,20 @@ const IndustryCard = ({ id }) => {
       },
     }
   );
+
+  const [deleteItem, setDeleteItem] = useState({
+    id: null,
+    confirm: false,
+    open: false,
+  });
+
+  const handleDelete = (id, confirm = false) => {
+    setDeleteItem({
+      id: id,
+      confirm: confirm,
+      open: true,
+    });
+  };
 
   useEffect(() => {
     getIndustryData(); // Fetch the industry detail when the component mounts
@@ -64,20 +79,25 @@ const IndustryCard = ({ id }) => {
                 Edit
               </button>
             </Link>
-            <Link
-              to={"/edit/industry/form"}
-              state={{
-                id: id,
-              }}
+
+            <button
+              onClick={() => handleDelete(id)}
+              className="p-2 text-sm  items-center text hidden group-hover:block text-blue hover:bg-red-600 bg-white group-hover:text-black font-bold px-5 rounded-full"
             >
-              <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue hover:bg-red-600 bg-white group-hover:text-black font-bold px-5 rounded-full">
-                <MdDelete className="inline-block mr-2 text-lg" />
-                Delete
-              </button>
-            </Link>
+              <MdDelete className="inline-block mr-2 text-lg" />
+              Delete
+            </button>
           </div>
         </div>
       </div>
+
+      {/* Delete  */}
+
+      {deleteItem?.open && (
+        <div className="fixed inset-0 flex items-center justify-center z-50 ">
+          <DeleteDialog data={deleteItem} setdata={setDeleteItem} />
+        </div>
+      )}
     </div>
   );
 };

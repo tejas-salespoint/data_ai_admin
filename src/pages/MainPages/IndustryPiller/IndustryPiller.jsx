@@ -15,6 +15,7 @@ const IndustryPiller = () => {
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Industry Piller</h2>
           <CreateButton link={'/create/industry_piller'} />
         </div>
+       
         <div className="grid grid-cols-4 gap-6">
             {data?.industryPillers?.data?.map((item) => <IndustryPillerCard key={item?.id} id={item?.id} /> )}
         </div>
