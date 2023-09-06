@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
 import DeleteDialog from "../../../../components/DeleteDialog";
 
-// eslint-disable-next-line react/prop-types
 const IndustryCard = ({ id }) => {
   const [getIndustryData, { data, loading, error }] = useLazyQuery(
     GET_INDUSTRY_BY_ID,
@@ -17,42 +16,37 @@ const IndustryCard = ({ id }) => {
     }
   );
 
-  const [deleteItem, setDeleteItem] = useState({
-    id: null,
-    confirm: false,
-    open: false,
-  });
+  const [deleteItem, setDeleteItem] = useState(null);
+  const [active,setActive] = useState(false);
+  
 
-  const handleDelete = (id, confirm = false) => {
-    setDeleteItem({
-      id: id,
-      confirm: confirm,
-      open: true,
-    });
+  const handleDelete = (id) => {
+    setDeleteItem(id);
+    setActive(true)
+   
   };
 
   useEffect(() => {
-    getIndustryData(); // Fetch the industry detail when the component mounts
+    getIndustryData();
   }, [getIndustryData]);
 
   const item = data?.industry?.data;
 
   if (loading) {
-    return <div>Loading...</div>; // Display a loading message while data is being fetched
+    return <div>Loading...</div>;
   }
 
-  if (error) return "Error :)";
+  if (error) {
+    return <div>Error :)</div>;
+  }
 
   return (
-    <div
-      key={item?.id}
-      className="group relative flex bg-cover bg-center bg-no-repeat items-center justify-center"
-    >
+    <div className="group relative flex bg-cover bg-center bg-no-repeat items-center justify-center" key={item?.id}>
       <div>
         <img
-          className="min-h-[11rem] "
+          className="max-h-[11rem] min-w-[19rem]"
           src={
-            item?.attributes?.image?.image ||
+            item?.attributes?.industry_image?.data?.attributes?.url ||
             "https://media.istockphoto.com/id/582256640/photo/oil-refinery-chemical-petrochemical-plant.jpg?s=612x612&w=0&k=20&c=BEdsHVe2vUfzRTb9KcsCS_tCH6_R_nKLKkOQCht8AKo="
           }
           alt="feature_1"
@@ -69,9 +63,9 @@ const IndustryCard = ({ id }) => {
         <div className="absolute z-10 inset-1 flex justify-center items-center font-bold text-white">
           <div className="flex flex-col gap-3 justify-center items-center">
             <Link
-              to={"/edit/industry/form"}
-              state={{
-                id: id,
+              to={{
+                pathname: "/edit/industry/form",
+                state: { id: id },
               }}
             >
               <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue bg-white group-hover:text-black font-bold px-5 rounded-full">
@@ -91,11 +85,13 @@ const IndustryCard = ({ id }) => {
         </div>
       </div>
 
-      {/* Delete  */}
-
-      {deleteItem?.open && (
-        <div className="fixed inset-0 flex items-center justify-center z-50 ">
-          <DeleteDialog data={deleteItem} setdata={setDeleteItem} />
+      {active &&   (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <DeleteDialog
+            data={deleteItem}
+            setdata={setDeleteItem}
+            setActive={setActive}
+          />
         </div>
       )}
     </div>

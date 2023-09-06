@@ -13,6 +13,7 @@ import { LinkInput } from "../../../components/LinkInput.jsx";
 import MediaLibrary from "../../../components/MediaLibrary/index.jsx";
 import MainTextEditor from "../../../components/TextEditor/MainTextEditor.jsx";
 import DeleteDialog from "../../../components/DeleteDialog.jsx";
+import MediaIcon from "../../../components/MediaIcon/MediaIcon.jsx";
 
 const IndustryForm = () => {
   const navigate = useNavigate();
@@ -74,9 +75,9 @@ const IndustryForm = () => {
   }
 
   return (
-    <div className="m-3 mx-6 ">
+    <div className="m-3 mx-6  ">
       <BackButton />
-    
+
       <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
         Create an Industry
       </h2>
@@ -105,6 +106,26 @@ const IndustryForm = () => {
             placeholder="Auto generate link"
             required
           />
+
+          {/* Upload Icon */}
+          {/* <div className={" sm:col-span-2"}>
+            <label
+              htmlFor={name}
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Upload Icon
+            </label>
+            <button
+              data-modal-target="staticModal"
+              data-modal-toggle="staticModal"
+              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              type="button"
+            >
+              Toggle modal
+            </button>
+            
+            <MediaIcon />
+          </div> */}
 
           {/* <TextAreaInput
             value={formData.overview}
