@@ -1,7 +1,17 @@
 /* eslint-disable react/prop-types */
-const DeleteDialog = ({ data, setData, setActive }) => {
-  const confirmDelete = () => {
-    setData({ ...data, confirm: true });
+const DeleteDialog = ({
+  data,
+  setData,
+  setActive,
+  handleDeleteindustry,
+  loading,
+}) => {
+  const confirmDelete = async () => {
+    // await setData((prev) => ({ ...prev, confirm: true }));
+    console.log(data);
+    if (data?.confirm) {
+      handleDeleteindustry(data?.id);
+    }
   };
 
   const handleClick = () => {
@@ -64,13 +74,18 @@ const DeleteDialog = ({ data, setData, setActive }) => {
               No, cancel
             </button>
             <button
-              onClick={confirmDelete}
+              onClick={async () => {
+                setData((prev) => ({ ...prev, confirm: true }));
+                await confirmDelete();
+              }}
               type="submit"
               className="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
             >
-              Yes, I'm sure
+              {loading && "loading..."}
+
+              {!loading && data?.confirm ? "confirmed" : "Yes, I'm sure"}
             </button>
-            {JSON.stringify(data)}
+            {/* {JSON.stringify(data)} */}
           </div>
         </div>
       </div>

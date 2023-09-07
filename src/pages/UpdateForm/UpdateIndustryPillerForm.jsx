@@ -16,12 +16,14 @@ import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
 const UpdateIndustryPillerForm = () => {
   const location = useLocation();
   const getId = location?.state?.id;
+  const [updateActive,setUpdateActive] = useState(true);
 
   const [
     getUpdateIndustryPillerData,
     {
       data: getUpdateIndustryPillerDataFilter,
       refetch: refetchIndustryPillers,
+      loading
     },
   ] = useLazyQuery(GET_INDUSTRY_PILLER_BY_ID, {
     variables: {
@@ -82,8 +84,16 @@ const UpdateIndustryPillerForm = () => {
           getUpdateIndustryPillerDataFilter?.industryPiller?.data?.attributes
             ?.overview_link || "",
       });
+      setUpdateActive(false)
     }
-  }, [getUpdateIndustryPillerDataFilter]);
+  }, [getUpdateIndustryPillerDataFilter,getUpdateIndustryPillerData]);
+
+
+  // check data is changed or not according to that we have option to disable or enable button
+  useEffect(() => {
+    console.log("formData changed:", formData); // Debugging line
+    setUpdateActive(true);
+  }, [formData]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -176,8 +186,10 @@ const UpdateIndustryPillerForm = () => {
         </div>
         <Button
           type="submit"
-          className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
+          
+          className="inline-flex items-center  px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
           label="Create"
+          activeUpdate={updateActive}
           loading={mutationLoading}
         />
       </form>

@@ -1,5 +1,11 @@
+import { useEffect } from "react";
+
 // eslint-disable-next-line react/prop-types
-const Button = ({ label, loading, ...rest }) => {
+const Button = ({ label, loading ,activeUpdate , ...rest }) => {
+    let value = "disbled"
+    useEffect(() => {
+        value = "change"
+    },[activeUpdate])
     return (
         <button type="button" disabled={loading} {...rest}>
             {loading ? (
@@ -26,6 +32,8 @@ const Button = ({ label, loading, ...rest }) => {
             ) : (
                 label
             )}
+
+            { activeUpdate && value }
         </button>
     );
 };

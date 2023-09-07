@@ -3,12 +3,12 @@ import { useMutation, useQuery } from "@apollo/client";
 import {
   CREATE_INDUSTRY_PILLER,
   GET_INDUSTRIES,
+  GET_INDUSTRY_PILLERS,
 } from "../../../graphql/query/queries.js";
 
 import Button from "../../components/Button.jsx";
 import { TextInput } from "../../components/TextInput.jsx";
 import { SelectInput } from "../../components/SelectInput.jsx";
-import { TextAreaInput } from "../../components/TextAreaInput.jsx";
 import BackButton from "../../components/BackButton.jsx";
 import { useNavigate } from "react-router-dom";
 import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
@@ -25,7 +25,10 @@ const SolutionPlaysForm = () => {
   }));
 
   const [createIndustryPiller, { loading: mutationLoading }] = useMutation(
-    CREATE_INDUSTRY_PILLER
+    CREATE_INDUSTRY_PILLER,
+    {
+      refetchQueries: [GET_INDUSTRY_PILLERS],
+    }
   );
 
   const [formData, setFormData] = useState({
@@ -42,7 +45,7 @@ const SolutionPlaysForm = () => {
     const publishedAt = new Date().toISOString();
 
     try {
-      const { data } = await createIndustryPiller({
+      await createIndustryPiller({
         variables: {
           title,
           overview,
@@ -59,6 +62,7 @@ const SolutionPlaysForm = () => {
         industryId: null,
         link: "",
       });
+
       navigate("/industry_piller");
     } catch (error) {
       console.error(error);

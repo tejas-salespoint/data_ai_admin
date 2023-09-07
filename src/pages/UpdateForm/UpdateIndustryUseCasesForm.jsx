@@ -162,7 +162,7 @@ const UpdateIndustryUseCasesForm = () => {
     const publishedAt = new Date().toISOString();
 
     try {
-      const { data } = await createIndustryUseCase({
+        await createIndustryUseCase({
         variables: {
           id: getId,
           usecaseTitle,

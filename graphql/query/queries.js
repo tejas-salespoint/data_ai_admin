@@ -32,6 +32,24 @@ query GET_INDUSTRY_BY_ID($id: ID!) {
             }
           }
         }
+
+        primary_icon {
+          data {
+            id
+            attributes {
+              url
+            }
+          }
+        }
+
+        secondary_icon {
+          data {
+            id
+            attributes {
+              url
+            }
+          }
+        }
       }
     }
   }
@@ -46,6 +64,8 @@ mutation CREATE_INDUSTRY(
   $industry_piller: [ID]
   $publish: DateTime
   $image: ID
+  $primary_icon: ID
+  $secondary_icon: ID
 ) {
   createIndustry(
     data: {
@@ -55,6 +75,8 @@ mutation CREATE_INDUSTRY(
       industry_pillers: $industry_piller
       publishedAt: $publish
       industry_image: $image
+      primary_icon: $primary_icon
+      secondary_icon: $secondary_icon
     }
   ) {
     data {
@@ -229,13 +251,26 @@ query GET_INDUSTRY_USECASE_BY_ID ($id: ID!){
 
 
 export const UPDATE_INDUSTRY = gql`
-mutation UpdateIndsutry($id : ID!, $title : String, $link : String, $overview : String,  $image: ID) {
-  updateIndustry(id: $id, data: {
-    title : $title
-    link : $link
-    overview : $overview 
-    industry_image: $image
-  }) {
+mutation UpdateIndsutry(
+  $id: ID!
+  $title: String
+  $link: String
+  $overview: String
+  $image: ID
+  $primary_icon: ID
+  $secondary_icon: ID
+) {
+  updateIndustry(
+    id: $id
+    data: {
+      title: $title
+      link: $link
+      overview: $overview
+      industry_image: $image
+      primary_icon: $primary_icon
+      secondary_icon: $secondary_icon
+    }
+  ) {
     data {
       id
     }
@@ -432,8 +467,12 @@ mutation UPDATE_INDUSTRY_USECASES(
 `
 
 export const  GET_MEDIA_LIBRARY_QUERY = gql`
-query GET_MEDIA_LIBRARY {
-  uploadFiles(filters: {}, pagination: {}, sort: []) {
+query GET_MEDIA_LIBRARY($page: Int, $pageSize: Int) {
+  uploadFiles(
+    filters: {}
+    pagination: { page: $page, pageSize: $pageSize }
+    sort: ["id:desc"]
+  ) {
     data {
       id
       attributes {
@@ -446,6 +485,58 @@ query GET_MEDIA_LIBRARY {
         url
         size
         mime
+      }
+    }
+
+    meta {
+      pagination {
+        page
+        pageCount
+        pageSize
+        total
+      }
+    }
+  }
+}
+
+`
+
+// delete quaries
+export const  DELETE_INDUSTRY = gql`
+mutation DELETE_INDUSTRY($id : ID!) {
+  deleteIndustry(id: $id) {
+    data {
+      id
+    }
+  }
+}`
+
+export const  DELETE_INDUSTRY_PILLER = gql`mutation DELETE_INDUSTRY_PILLER($id: ID!) {
+  deleteIndustryPiller(id: $id) {
+    data {
+      id
+    }
+  }
+}`
+
+
+export const  DELETE_INDUSTRY_USECASE = gql`
+mutation DELETE_INDUSTRY_USECASE($id: ID!) {
+  deleteUsecase(id: $id) {
+    data {
+      id
+    }
+  }
+}
+`
+
+export const UPLOAD_FILE=gql`
+mutation ($file: Upload!) {
+  upload(file: $file) {
+    data {
+      id
+      attributes {
+        url
       }
     }
   }

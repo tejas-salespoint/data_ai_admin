@@ -12,28 +12,28 @@ import { useNavigate } from "react-router-dom";
 import { LinkInput } from "../../../components/LinkInput.jsx";
 import MediaLibrary from "../../../components/MediaLibrary/index.jsx";
 import MainTextEditor from "../../../components/TextEditor/MainTextEditor.jsx";
-import DeleteDialog from "../../../components/DeleteDialog.jsx";
-import MediaIcon from "../../../components/MediaIcon/MediaIcon.jsx";
 
 const IndustryForm = () => {
   const navigate = useNavigate();
   const [createIndustry, { loading }] = useMutation(CREATE_INDUSTRY);
   const [imageid, setImageId] = useState({});
+  const [primaryImageId, setPrimaryImageId] = useState({});
+  const [secondImageId, setSecondImageId] = useState({});
 
   const [formData, setFormData] = useState({
     title: "",
     link: "",
     overview: "",
+   
+    
+ 
     industryPillers: [],
   });
-
-  const [imageBase64, setImageBase64] = useState({});
-  const [isFormSubmitted, setIsFormSubmitted] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { title, overview, link } = formData;
+    const { title, overview, link  } = formData;
     const publishedAt = new Date().toISOString();
 
     try {
@@ -44,6 +44,10 @@ const IndustryForm = () => {
           overview,
           publish: publishedAt,
           image: imageid?.id,
+          primary_icon : primaryImageId?.id,
+          secondary_icon : secondImageId?.id
+
+          
         },
         refetchQueries: [{ query: GET_INDUSTRIES }],
       });
@@ -54,9 +58,10 @@ const IndustryForm = () => {
         link: "",
         overview: "",
         industryPillers: [],
+      
+        
       });
-      setImageBase64({});
-      setIsFormSubmitted(true);
+
       navigate("/industry");
       // Set form submission status to true
     } catch (error) {
@@ -71,6 +76,8 @@ const IndustryForm = () => {
       link: "",
       overview: "",
       industryPillers: [],
+      
+      
     });
   }
 
@@ -107,37 +114,6 @@ const IndustryForm = () => {
             required
           />
 
-          {/* Upload Icon */}
-          {/* <div className={" sm:col-span-2"}>
-            <label
-              htmlFor={name}
-              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-            >
-              Upload Icon
-            </label>
-            <button
-              data-modal-target="staticModal"
-              data-modal-toggle="staticModal"
-              className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              type="button"
-            >
-              Toggle modal
-            </button>
-            
-            <MediaIcon />
-          </div> */}
-
-          {/* <TextAreaInput
-            value={formData.overview}
-            setValue={(value) =>
-              setFormData((prevData) => ({ ...prevData, overview: value }))
-            }
-            label="Overview"
-            id="description"
-            rows={8}
-            placeholder="Your description here"
-          /> */}
-
           <div className="sm:col-span-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Overview
@@ -150,6 +126,30 @@ const IndustryForm = () => {
             />
           </div>
 
+          <div className="flex gap-5">
+            <div className="sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full">
+                Primary Icon
+              </label>
+              <MediaLibrary
+                setImageId={setPrimaryImageId}
+                imageid={primaryImageId}
+                type={true}
+              />
+            </div>
+
+            <div className="sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Secondary Icon
+              </label>
+              <MediaLibrary
+                setImageId={setSecondImageId}
+                imageid={secondImageId}
+                type={true}
+              />
+            </div>
+          </div>
+
           {/* Media libaray */}
 
           <div className="sm:col-span-2">
@@ -158,6 +158,8 @@ const IndustryForm = () => {
             </label>
             <MediaLibrary setImageId={setImageId} imageid={imageid} />
           </div>
+
+         
 
           {/* <p>Image id : {imageid.id } {imageid.url}</p> */}
           {/* <img src={imageid.url} alt="imageid"  /> */}

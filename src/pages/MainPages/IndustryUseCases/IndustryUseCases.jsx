@@ -4,7 +4,7 @@ import CreateButton from "../../../components/CreateButton";
 import IndustryUseCasesCard from "./Card/Card";
 
 const IndustryUseCases = () => {
-  const { loading, error, data } = useQuery(GET_INDUSTRY_USECASES);
+  const { loading, error, data,refetch } = useQuery(GET_INDUSTRY_USECASES);
 
   if (loading) return "Loading...";
   if (error) return "Error";
@@ -17,7 +17,7 @@ const IndustryUseCases = () => {
              <CreateButton link={'/create/industry_usecases'}  />
             </div>
             <div className="grid grid-cols-4  gap-6">
-                {data?.usecases?.data?.map((item) => <IndustryUseCasesCard key={item?.id} id={item?.id} /> )}
+                {data?.usecases?.data?.map((item) => <IndustryUseCasesCard key={item?.id} id={item?.id} refetch={refetch} /> )}
             </div>
         </div>
 

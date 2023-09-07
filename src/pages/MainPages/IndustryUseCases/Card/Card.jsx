@@ -1,12 +1,13 @@
-import { useLazyQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
 import { FaEdit } from "react-icons/fa";
-import { GET_INDUSTRY_USECASE_BY_ID } from "../../../../../graphql/query/queries";
-import { useEffect } from "react";
+import { DELETE_INDUSTRY_USECASE, GET_INDUSTRY_USECASE_BY_ID } from "../../../../../graphql/query/queries";
+import { useEffect, useState } from "react";
 import { MdDelete } from "react-icons/md";
+import DeleteDialog from "../../../../components/DeleteDialog";
 
 // eslint-disable-next-line react/prop-types
-const IndustryUseCasesCard = ({ id }) => {
+const IndustryUseCasesCard = ({ id , refetch }) => {
   const [getIndustryUseCaseData, { data, loading, error }] = useLazyQuery(
     GET_INDUSTRY_USECASE_BY_ID,
     {
@@ -16,11 +17,46 @@ const IndustryUseCasesCard = ({ id }) => {
     }
   );
 
+  
+  const [deleteItem, setDeleteItem] = useState(null);
+  const [active,setActive] = useState(false);
+  
+  const [deleteIndustry, deleteIndustryAfterDelete] = useMutation(
+    DELETE_INDUSTRY_USECASE
+  );
+  const handleDelete = (id) => {
+    setDeleteItem({
+      id: id,
+    });
+    setActive(true);
+  };
+
+   const handleDeleteindustry = async (id) => {
+    console.log(id);
+    try {
+      // Execute the deleteIndustry mutation with the provided id
+      await deleteIndustry({
+        variables: {
+          id: id,
+        },
+      }).then(async () => {
+        // Close the delete confirmation dialog or handle any other logic you need
+        setActive(false);
+        await refetch();
+      });
+
+      // You may also want to refresh your data or perform any other actions here
+    } catch (error) {
+      console.error("Error deleting industry:", error);
+      // Handle error here
+    }
+  };
+
   useEffect(() => {
     getIndustryUseCaseData(); // Fetch the industry detail when the component mounts
   }, [getIndustryUseCaseData]);
 
-  console.log(data);
+ 
   const item = data?.usecase?.data;
   console.log(item);
 
@@ -66,20 +102,28 @@ const IndustryUseCasesCard = ({ id }) => {
                 Edit
               </button>
             </Link>
-            <Link
-              to={"/edit/industry_piller/form"}
-              state={{
-                id: id,
-              }}
-            >
-              <button className="p-2 text-sm  items-center text hidden group-hover:block text-blue hover:bg-red-600 bg-white group-hover:text-black font-bold px-5 rounded-full">
+            
+              <button 
+             onClick={() => handleDelete(id)}
+              className="p-2 text-sm  items-center text hidden group-hover:block text-blue hover:bg-red-600 bg-white group-hover:text-black font-bold px-5 rounded-full">
                 <MdDelete className="inline-block mr-2 text-lg" />
                 Delete
               </button>
-            </Link>
+            
           </div>
         </div>
       </div>
+      {active &&   (
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <DeleteDialog
+            data={deleteItem}
+            setData={setDeleteItem}
+            setActive={setActive}
+            handleDeleteindustry={handleDeleteindustry}
+            loading={deleteIndustryAfterDelete?.loading}
+          />
+        </div>
+      )}
     </div>
   );
 };

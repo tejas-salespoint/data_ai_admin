@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { useLazyQuery, useMutation } from "@apollo/client";
 import {
-  GET_INDUSTRIES,
   GET_INDUSTRY_BY_ID,
   UPDATE_INDUSTRY,
 } from "../../../graphql/query/queries.js";
@@ -9,7 +8,6 @@ import {
 import Button from "../../components/Button.jsx";
 import { TextInput } from "../../components/TextInput.jsx";
 
-import { TextAreaInput } from "../../components/TextAreaInput.jsx";
 import { useLocation } from "react-router-dom";
 
 import BackButton from "../../components/BackButton.jsx";
@@ -19,22 +17,33 @@ import MediaLibrary from "../../components/MediaLibrary/index.jsx";
 
 const UpdateIndustryForm = () => {
   const location = useLocation();
-  const [getId] = useState(location?.state?.id);
+  const getId = location?.state?.id;
+
   const [imageid, setImageId] = useState({
     url: null,
     id: null,
   });
 
-  const [getUpdateIndustryData, { data: getUpdateIndustryDataFilter }] =
-    useLazyQuery(GET_INDUSTRY_BY_ID, {
-      variables: {
-        id: getId,
-      },
-    });
+  const [primaryImageId, setPrimaryImageId] = useState({
+    url: null,
+    id: null,
+  });
+  const [secondImageId, setSecondImageId] = useState({
+    url: null,
+    id: null,
+  });
+
+
+  const [
+    getUpdateIndustryData,
+    { data: getUpdateIndustryDataFilter, refetch },
+  ] = useLazyQuery(GET_INDUSTRY_BY_ID, {
+    variables: {
+      id: getId,
+    },
+  });
 
   const [updateIndustry, { loading }] = useMutation(UPDATE_INDUSTRY);
-  const [imageBase64, setImageBase64] = useState({});
-  const [isFormSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     title: "",
     link: "",
@@ -52,22 +61,29 @@ const UpdateIndustryForm = () => {
   // Update the form data when industry data is available
   useEffect(() => {
     if (getUpdateIndustryDataFilter) {
+      const industryData = getUpdateIndustryDataFilter?.industry?.data?.attributes;
+
       setFormData({
-        title:
-          getUpdateIndustryDataFilter?.industry?.data?.attributes?.title || "",
-        overview:
-          getUpdateIndustryDataFilter?.industry?.data?.attributes?.overview ||
-          "",
-        link:
-          getUpdateIndustryDataFilter?.industry?.data?.attributes?.link || "",
+        title: industryData?.title || "",
+        overview: industryData?.overview || "",
+        link: industryData?.link || "",
         industryPillers: [],
       });
+
       setImageId({
-        url: getUpdateIndustryDataFilter?.industry?.data?.attributes
-          ?.industry_image?.data?.attributes?.url,
-        id: getUpdateIndustryDataFilter?.industry?.data?.attributes
-          ?.industry_image?.data?.id,
+        url: industryData?.industry_image?.data?.attributes?.url,
+        id: industryData?.industry_image?.data?.id,
       });
+
+      setPrimaryImageId({
+        url: industryData?.primary_icon?.data?.attributes?.url,
+        id: industryData?.primary_icon?.data?.id,
+      })
+
+      setSecondImageId({
+        url: industryData?.secondary_icon?.data?.attributes?.url,
+        id: industryData?.secondary_icon?.data?.id,
+      })
     }
   }, [getUpdateIndustryDataFilter]);
 
@@ -76,16 +92,31 @@ const UpdateIndustryForm = () => {
 
     const { title, overview, link } = formData;
     try {
-      const { data } = await updateIndustry({
+      await updateIndustry({
         variables: {
           id: getId,
           title,
           link,
           overview,
           image: imageid?.id,
+          primary_icon : primaryImageId?.id,
+          secondary_icon : secondImageId?.id
         },
-        refetchQueries: [{ query: GET_INDUSTRIES }],
-      });
+      }).then(() => {
+        // Clear form fields on successful submission
+        setFormData({
+          title: "",
+          overview: "",
+          link: "",
+          industryPillers: [],
+        });
+
+       refetch({
+          variables: {
+            id: getId,
+          },
+        })
+    });
 
       // Clear form fields on successful submission
       setFormData({
@@ -94,6 +125,7 @@ const UpdateIndustryForm = () => {
         link: "",
         industryPillers: [],
       });
+
     } catch (error) {
       // Handle error
       console.error(error);
@@ -112,7 +144,7 @@ const UpdateIndustryForm = () => {
       >
         <div className="grid gap-4 sm:grid-cols-2 sm:gap-6">
           <TextInput
-            value={formData.title || "Loading ..."}
+            value={formData.title}
             setValue={(value) => setFormData({ ...formData, title: value })}
             label="Industry Name"
             name="name"
@@ -121,7 +153,7 @@ const UpdateIndustryForm = () => {
           />
           <LinkInput
             mainValue={formData.link}
-            value={formData.title || "Loading ..."} // Use the same title for generating the slug
+            value={formData.title} // Use the same title for generating the slug
             setValue={(value) =>
               setFormData((prevData) => ({ ...prevData, link: value }))
             }
@@ -130,29 +162,41 @@ const UpdateIndustryForm = () => {
             placeholder="Auto generate link"
             required
           />
-          {/* Update the industryPillers state based on selected options */}
-          {/* <SelectInput
-                        label="Industry Pillers"
-                        id="category"
-                        options={["TV/Monitors", "PC", "Gaming/Console", "Phones"]}
-                        isMulti
-                        value={formData.industryPillers}
-                        setValue={(value) => setFormData({ ...formData, industryPillers: value })}
-                    /> */}
-          {/* <TextAreaInput
-            value={formData?.overview || "Loading ..."}
-            setValue={(value) => setFormData({ ...formData, overview: value })}
-            label="Overview"
-            id="description"
-            rows={8}
-            placeholder="Your description here"
-          /> */}
-
           <div className="sm:col-span-2">
             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
               Overview
             </label>
-            <MainTextEditor value={formData?.overview || "Loading ..."}  setValue={(value) => setFormData({ ...formData, overview: value })} />
+            <MainTextEditor
+              value={formData?.overview}
+              setValue={(value) =>
+                setFormData({ ...formData, overview: value })
+              }
+            />
+          </div>
+
+
+          <div className="flex gap-5">
+            <div className="sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white w-full">
+                Primary Icon
+              </label>
+              <MediaLibrary
+                setImageId={setPrimaryImageId}
+                imageid={primaryImageId}
+                type={true}
+              />
+            </div>
+
+            <div className="sm:col-span-1">
+              <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                Secondary Icon
+              </label>
+              <MediaLibrary
+                setImageId={setSecondImageId}
+                imageid={secondImageId}
+                type={true}
+              />
+            </div>
           </div>
 
           <div className="sm:col-span-2">
@@ -161,18 +205,11 @@ const UpdateIndustryForm = () => {
             </label>
             <MediaLibrary setImageId={setImageId} imageid={imageid} />
           </div>
-          {/* <ImageUploader
-            value={imageBase64}
-            setValue={setImageBase64}
-            label={"Industry Image"}
-            isFormSubmitted={isFormSubmitted}
-          /> */}
         </div>
-
         <Button
           type="submit"
           className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
-          label="Create"
+          label={loading ? "Updating..." : "Update"}
           loading={loading}
         />
       </form>

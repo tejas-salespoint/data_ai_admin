@@ -4,7 +4,7 @@ import CreateButton from '../../../components/CreateButton';
 import IndustryCard from './Card/Card';
 
 const Industry = () => {
-    const { loading, error, data } = useQuery(GET_INDUSTRIES);
+    const { loading, error, data ,refetch} = useQuery(GET_INDUSTRIES);
 
     if (loading) return "Loading...";
     if (error) return "Error";
@@ -19,7 +19,7 @@ const Industry = () => {
              <CreateButton link={'/create/industry'} />
             </div>
             <div className="grid grid-cols-4  gap-6">
-                {data?.industries?.data?.map((item) => <IndustryCard key={item?.id} id={item?.id} /> )}
+                {data?.industries?.data?.map((item) => <IndustryCard key={item?.id} id={item?.id} refetch={refetch} /> )}
             </div>
         </div>
 

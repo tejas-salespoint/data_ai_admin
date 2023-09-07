@@ -13,6 +13,7 @@
     "@apollo/client": "^3.7.17",
     "@material-tailwind/react": "^2.1.1",
     "apollo-boost": "^0.4.9",
+    "apollo-upload-client": "^17.0.0",
     "flowbite-react": "^0.5.0",
     "graphql": "^15.8.0",
     "react": "^18.2.0",

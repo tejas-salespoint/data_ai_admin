@@ -28,16 +28,16 @@ const ImageCard = ({ id, active, title, image, createdAt, onSelect }) => {
       <div className="flex items-center justify-center relative ">
         <img
           onClick={handleImageClick}
-          className={`rounded-lg h-40 bg-transparent  `}
+          className={`rounded-lg object-scale-down h-40 bg-transparent  `}
           src={image}
           alt=""
         />
-        <div aria-label="delete" className="bg-gray-600  p-2 rounded-full absolute top-3 right-3 hover:bg-red-600">
+        {/* <div aria-label="delete" className="bg-gray-600  p-2 rounded-full absolute top-3 right-3 hover:bg-red-600">
           <MdDelete
             onClick={handleDeleteImage(id)}
             color="white"
           />
-        </div>
+        </div> */}
         {/* {deleteDialog && <DeleteImage />} */}
         
       </div>
