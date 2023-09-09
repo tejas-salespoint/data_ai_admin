@@ -3,10 +3,15 @@ import { useEffect, useState } from "react";
 
 // Define the LinkInput component
 // eslint-disable-next-line react/prop-types
-export  function LinkInput({
-    
+export function LinkInput({
   // eslint-disable-next-line react/prop-types
-  label,value,setValue,name,placeholder,required,size,
+  label,
+  value,
+  setValue,
+  name,
+  placeholder,
+  required,
+  size,
 }) {
   const [slug, setSlug] = useState("");
 
@@ -26,6 +31,7 @@ export  function LinkInput({
 
     const newSlug = generateSlug(value);
     setSlug(newSlug);
+    setValue(newSlug);
   }, [value]);
 
   return (

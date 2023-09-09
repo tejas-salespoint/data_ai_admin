@@ -1,41 +1,42 @@
-import { useEffect } from "react";
-
 // eslint-disable-next-line react/prop-types
-const Button = ({ label, loading ,activeUpdate , ...rest }) => {
-    let value = "disbled"
-    useEffect(() => {
-        value = "change"
-    },[activeUpdate])
-    return (
-        <button type="button" disabled={loading} {...rest}>
-            {loading ? (
-                <svg
-                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                >
-                    <circle
-                        className="opacity-25"
-                        cx="12"
-                        cy="12"
-                        r="10"
-                        stroke="currentColor"
-                        strokeWidth="4"
-                    ></circle>
-                    <path
-                        className="opacity-75"
-                        fill="currentColor"
-                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 0012 20c4.411 0 8-3.589 8-8h-2c0 3.309-2.691 6-6 6s-6-2.691-6-6H6c0 3.309 2.691 6 6 6zm8-7.291a7.963 7.963 0 00-4-6.928V2.618L15.382 4l-.708.707L13 2.618V4a7.963 7.963 0 00-6.928 4H4l2.325.775-.775 2.325h3.536A7.963 7.963 0 0012 20c1.74 0 3.346-.564 4.654-1.517l.775 2.325H20l-2.325-.775A7.96 7.96 0 0020 12z"
-                    ></path>
-                </svg>
-            ) : (
-                label
-            )}
+const Button = ({ label, loading, activeUpdate, ...rest }) => {
+  // let value = "disbled"
+  // useEffect(() => {
+  //     value = "change"
+  // },[activeUpdate])
+  return (
+    <button type="button" disabled={loading} {...rest}>
+      {loading ? (
+        <div>
+          <svg
+            aria-hidden="true"
+            role="status"
+            className="inline w-4 h-4 mr-3 text-gray-200 animate-spin dark:text-gray-600"
+            viewBox="0 0 100 101"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+              fill="currentColor"
+            />
+            <path
+              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+              fill="#1C64F2"
+            />
+          </svg>
+          <span className="text-sm text-gray-500">
 
-            { activeUpdate && value }
-        </button>
-    );
+          Loading...
+          </span>
+        </div>
+      ) : (
+        label
+      )}
+    </button>
+  );
 };
 
 export default Button;
+
+

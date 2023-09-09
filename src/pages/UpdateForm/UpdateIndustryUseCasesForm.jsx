@@ -32,7 +32,7 @@ const UpdateIndustryUseCasesForm = () => {
   const [imageBase64, setImageBase64] = useState({});
   const [isFormSubmitted] = useState(false);
 
-  const [createIndustryUseCase] = useMutation(UPDATE_INDUSTRY_USECASES);
+  const [createIndustryUseCase,{loading}] = useMutation(UPDATE_INDUSTRY_USECASES);
   const { data: indsutryPillerData } = useQuery(GET_INDSUTRIES_PILLERS);
 
   const industries = indsutryPillerData?.industryPillers?.data || [];
@@ -229,7 +229,7 @@ const UpdateIndustryUseCasesForm = () => {
               name="usecaseTitle"
               placeholder="Type usecase title"
               size={1}
-              value={formData.usecaseTitle}
+              value={formData.usecaseTitle || "Loading ..."}
               setValue={(value) =>
                 setFormData({ ...formData, usecaseTitle: value })
               }
@@ -240,7 +240,7 @@ const UpdateIndustryUseCasesForm = () => {
               size={1}
               form_link={'/create/industry_piller'}
               id="category"
-              value={formData.industryPillarId}
+              value={formData.industryPillarId || "Loading ..."}
               setValue={(value) =>
                 setFormData({ ...formData, industryPillarId: value })
               }
@@ -270,7 +270,7 @@ const UpdateIndustryUseCasesForm = () => {
               {/* Decision Makers Factors */}
 
               <MainTextEditor
-                name={"decisionMakersFactors"}
+                label={"Decision Makers Factors"}
                 id={"decisionMakersFactors"}
                 placeholder={"Enter factors influencing decision makers..."}
                 value={formData.decisionMakersFactors}
@@ -366,7 +366,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="industryName"
                 placeholder="Enter Industry name..."
                 size={1}
-                value={formData.industryName}
+                value={formData.industryName }
                 setValue={(value) =>
                   setFormData({ ...formData, industryName: value })
                 }
@@ -376,7 +376,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="geography"
                 placeholder="Enter Geographical region..."
                 size={1}
-                value={formData.geography}
+                value={formData.geography }
                 setValue={(value) =>
                   setFormData({ ...formData, geography: value })
                 }
@@ -386,7 +386,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="marketCap"
                 placeholder="Enter Market cap..."
                 size={1}
-                value={formData.marketCap}
+                value={formData.marketCap }
                 setValue={(value) =>
                   setFormData({ ...formData, marketCap: value })
                 }
@@ -396,7 +396,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="employees"
                 placeholder="Enter Number of employees..."
                 size={1}
-                value={formData.employees}
+                value={formData.employees }
                 setValue={(value) =>
                   setFormData({ ...formData, employees: value })
                 }
@@ -406,7 +406,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="budget"
                 placeholder="Enter Budget..."
                 size={1}
-                value={formData.budget}
+                value={formData.budget }
                 setValue={(value) =>
                   setFormData({ ...formData, budget: value })
                 }
@@ -441,7 +441,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="imageLink"
                 placeholder="Enter Image URL..."
                 size={1}
-                value={formData.imageLink}
+                value={formData.imageLink }
                 setValue={(value) =>
                   setFormData({ ...formData, imageLink: value })
                 }
@@ -451,7 +451,7 @@ const UpdateIndustryUseCasesForm = () => {
                 name="imageSubtitle"
                 placeholder="Enter Image subtitle..."
                 size={1}
-                value={formData.imageSubtitle}
+                value={formData.imageSubtitle }
                 setValue={(value) =>
                   setFormData({ ...formData, imageSubtitle: value })
                 }
@@ -464,7 +464,7 @@ const UpdateIndustryUseCasesForm = () => {
           type="submit"
           className="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-gray-800 rounded-lg focus:ring-4 focus:ring-gray-700 dark:focus:ring-gray-700 hover:bg-gray-700"
           label="Update"
-          // loading={loading}
+          loading={loading}
         />
       </form>
     </div>

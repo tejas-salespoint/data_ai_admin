@@ -3,8 +3,13 @@ import { useQuery } from "@apollo/client";
 import CreateButton from "../../../components/CreateButton";
 import IndustryPillerCard from "./Card/Card";
 
+
 const IndustryPiller = () => {
-  const { loading, error, data , refetch } = useQuery(GET_INDUSTRY_PILLERS);
+  const { loading, error, data , refetch } = useQuery(GET_INDUSTRY_PILLERS,{
+    variables : {
+      'limit' : 50
+    }
+  });
 
   if (loading) return "Loading...";
   if (error) return "Error :)";
@@ -15,9 +20,11 @@ const IndustryPiller = () => {
           <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">Industry Piller</h2>
           <CreateButton link={'/create/industry_piller'}  />
         </div>
+
+     
        
         <div className="grid grid-cols-4 gap-6">
-            {data?.industryPillers?.data?.map((item) => <IndustryPillerCard key={item?.id} id={item?.id} refetch={refetch} /> )}
+            {data?.industryPillers?.data?.map((item) => <IndustryPillerCard key={item?.id} id={item?.id} refetch={refetch}  /> )}
         </div>
     </div>
   );

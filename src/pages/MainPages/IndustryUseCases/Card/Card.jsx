@@ -84,7 +84,7 @@ const IndustryUseCasesCard = ({ id , refetch }) => {
 
       <div>
         <div className="h-30 w-50 flex justify-center items-center backdrop-brightness-50 absolute z-10 inset-1 group-hover:hidden font-bold text-white">
-          <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
+          <button className="p-2 text-white text-sm bg-blue font-bold w-[80%] px-5 rounded-full">
             {item?.attributes?.title}
           </button>
         </div>

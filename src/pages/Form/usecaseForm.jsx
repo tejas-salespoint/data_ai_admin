@@ -1,16 +1,17 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { SelectInput } from "../../components/SelectInput.jsx";
 import { TextInput } from "../../components/TextInput.jsx";
-import DynamicInputFields from "../../components/FormFields/DynamicInputFields.jsx";
+
 import Button from "../../components/Button.jsx";
 import { useMutation, useQuery } from "@apollo/client";
 import {
   CREATE_INDUSTRY_USECASES,
   GET_INDSUTRIES_PILLERS,
+  GET_INDUSTRY_USECASES,
 } from "../../../graphql/query/queries.js";
 import { useState } from "react";
 import BackButton from "../../components/BackButton.jsx";
-import ImageUploader from "../../components/FormFields/ImageUploader.jsx";
+
 import { useNavigate } from "react-router-dom";
 import MainTextEditor from "../../components/TextEditor/MainTextEditor.jsx";
 import MediaLibrary from "../../components/MediaLibrary/index.jsx"
@@ -103,6 +104,7 @@ const usecaseForm = () => {
           imageSubtitle,
           publish: publishedAt,
         },
+        refetchQueries: [{ query: GET_INDUSTRY_USECASES }],
       });
 
       // Access the mutation response data
@@ -194,7 +196,7 @@ const usecaseForm = () => {
               {/* Decision Makers Factors */}
 
               <MainTextEditor
-                name={"decisionMakersFactors"}
+                label={"Decision Makers Factors"}
                 id={"decisionMakersFactors"}
                 placeholder={"Enter factors influencing decision makers..."}
                 value={formData.decisionMakersFactors}

@@ -32,7 +32,7 @@ const IndustryPillerCard = ({ id , refetch }) => {
   };
 
   const handleDeleteindustry = async (id) => {
-    console.log(id);
+   
     try {
       // Execute the deleteIndustry mutation with the provided id
       await deleteIndustry({
@@ -57,7 +57,7 @@ const IndustryPillerCard = ({ id , refetch }) => {
   }, [getIndustryPillerData]);
 
   const item = data?.industryPiller?.data;
-  console.log(item);
+  
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading message while data is being fetched
@@ -82,10 +82,11 @@ const IndustryPillerCard = ({ id , refetch }) => {
       </div>
 
       <div>
-        <div className="h-30 w-50 flex justify-center items-center backdrop-brightness-50 absolute z-10 inset-1 group-hover:hidden font-bold text-white">
-          <button className="p-2 text-white text-sm bg-blue font-bold w-[48%] px-5 rounded-full">
+        <div className="h-30 w-50 flex flex-col justify-center items-center backdrop-brightness-50 absolute z-10 inset-1 group-hover:hidden font-bold text-white">
+          <button className="p-2 text-white text-sm bg-blue font-bold w-[80%] px-5 rounded-full">
             {item?.attributes?.title}
           </button>
+          <span className="bg-blue-100 rounded-full flex items-center justify-center align-middle text-center text-blue-800 text-xs font-semibold mr-2 px-2.5 py-0.5  dark:bg-blue-200 dark:text-blue-800 ml-3">{item?.attributes?.industry?.data?.attributes?.title}</span>
         </div>
 
         <div className="absolute z-10 inset-1 flex justify-center items-center font-bold text-white">

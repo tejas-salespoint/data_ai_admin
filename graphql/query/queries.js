@@ -216,6 +216,9 @@ query GET_INDUSTRY_PILLER_BY_ID($id: ID!) {
         industry {
           data {
             id
+            attributes {
+              title
+            }
           }
         }
       }
