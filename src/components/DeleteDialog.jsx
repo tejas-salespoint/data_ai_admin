@@ -8,7 +8,7 @@ const DeleteDialog = ({
 }) => {
   const confirmDelete = async () => {
     // await setData((prev) => ({ ...prev, confirm: true }));
-    console.log(data);
+    
     if (data?.confirm) {
       handleDeleteindustry(data?.id);
     }

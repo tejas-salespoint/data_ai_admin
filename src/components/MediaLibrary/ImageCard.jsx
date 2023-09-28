@@ -1,8 +1,7 @@
 /* eslint-disable react/prop-types */
 
 import { useState } from "react";
-import { MdDelete } from "react-icons/md";
-import DeleteImage from "./deleteImage";
+
 
 const ImageCard = ({ id, active, title, image, createdAt, onSelect }) => {
   const [isSelected, setIsSelected] = useState(active || false);
@@ -14,9 +13,9 @@ const ImageCard = ({ id, active, title, image, createdAt, onSelect }) => {
     }
   };
 
-  const handleDeleteImage = ({id}) => {
-    console.log(id)
-  }
+  // const handleDeleteImage = ({id}) => {
+  //   console.log(id)
+  // }
 
   return (
     <div

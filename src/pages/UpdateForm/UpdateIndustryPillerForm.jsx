@@ -91,7 +91,7 @@ const UpdateIndustryPillerForm = () => {
 
   // check data is changed or not according to that we have option to disable or enable button
   useEffect(() => {
-    console.log("formData changed:", formData); // Debugging line
+    // console.log("formData changed:", formData); // Debugging line
     setUpdateActive(true);
   }, [formData]);
 

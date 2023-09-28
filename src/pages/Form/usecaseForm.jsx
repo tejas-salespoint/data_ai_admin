@@ -27,9 +27,9 @@ const usecaseForm = () => {
   const { data: indsutryPillerData, loading: industryPillerLoading } = useQuery(
     GET_INDSUTRIES_PILLERS
   );
-  console.log(indsutryPillerData);
+  
   const industries = indsutryPillerData?.industryPillers?.data || [];
-  console.log(industries);
+
   const options = industries?.map((item) => ({
     value: item?.id,
     label: `${item?.attributes?.title} ( ${item?.attributes?.industry?.data?.attributes?.title} )`,

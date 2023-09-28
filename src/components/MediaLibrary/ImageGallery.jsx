@@ -18,7 +18,7 @@ const ImageGallery = ({ setImageId, imageId }) => {
     }
   );
 
-  console.log(data)
+
 
   const [selectedImageId, setSelectedImageId] = useState(imageId?.id);
   const [currentPage, setCurrentPage] = useState(1); // Initialize currentPage to 1
@@ -73,7 +73,7 @@ const ImageGallery = ({ setImageId, imageId }) => {
   };
 
   useEffect(() => {
-    console.log(selectedImageId);
+    // console.log(selectedImageId);
   }, [selectedImageId]);
 
   if (loading)

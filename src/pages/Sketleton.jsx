@@ -4,8 +4,7 @@ import {GET_INDUSTRIES} from "../../graphql/query/queries.js";
 const Skeleton = () => {
     const {loading , error , data} = useQuery(GET_INDUSTRIES)
     if (loading) return "Loading...";
-    console.log(data)
-    console.log(error)
+    
     return (
         <>
             <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">

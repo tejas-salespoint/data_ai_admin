@@ -9,7 +9,7 @@ const UploadComponent = () => {
   const [uploadImage, { data, loading, error }] = useMutation(UPLOAD_FILE, {
     onCompleted: (data) => {
       // Handle the response from the server after image upload if needed
-      console.log("Image uploaded successfully:", data);
+    
     },
   });
 

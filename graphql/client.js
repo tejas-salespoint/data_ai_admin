@@ -5,10 +5,10 @@ import { createUploadLink } from 'apollo-upload-client';
 
 
 export const client = new ApolloClient({
-    uri: 'http://localhost:1337/graphql',
+    uri: 'https://dai-indsutry-strapi-main.azurewebsites.net//graphql',
     cache: new InMemoryCache(),
     link: createUploadLink({
-        uri: 'http://localhost:1337/graphql', // Apollo Server is served from port 4000
+        uri: 'https://dai-indsutry-strapi-main.azurewebsites.net//graphql', // Apollo Server is served from port 4000
         headers: {
           "keep-alive": "true"
         }

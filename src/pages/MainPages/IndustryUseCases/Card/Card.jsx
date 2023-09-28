@@ -32,7 +32,7 @@ const IndustryUseCasesCard = ({ id , refetch }) => {
   };
 
    const handleDeleteindustry = async (id) => {
-    console.log(id);
+    
     try {
       // Execute the deleteIndustry mutation with the provided id
       await deleteIndustry({
@@ -58,7 +58,7 @@ const IndustryUseCasesCard = ({ id , refetch }) => {
 
  
   const item = data?.usecase?.data;
-  console.log(item);
+
 
   if (loading) {
     return <div>Loading...</div>; // Display a loading message while data is being fetched
