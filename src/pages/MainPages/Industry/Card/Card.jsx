@@ -70,7 +70,7 @@ const IndustryCard = ({ id ,refetch}) => {
     <div className="group relative flex bg-cover bg-center bg-no-repeat items-center justify-center" key={item?.id}>
       <div>
         <img
-          className="max-h-[11rem] min-w-[19rem]"
+          className="max-h-[11rem] min-w-[17rem]"
           src={
             item?.attributes?.industry_image?.data?.attributes?.url ||
             "https://media.istockphoto.com/id/582256640/photo/oil-refinery-chemical-petrochemical-plant.jpg?s=612x612&w=0&k=20&c=BEdsHVe2vUfzRTb9KcsCS_tCH6_R_nKLKkOQCht8AKo="
